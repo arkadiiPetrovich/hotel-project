@@ -19,7 +19,7 @@ public class BookingController extends JFrame {
     //========= Fields =========
     private static final int MENU_WIDTH = 300;
     private static final int MENU_LENGTH = 350;
-    
+
     //Based on MVC model
     private Booking model; //M
     private BookingView view; //V
@@ -88,10 +88,10 @@ public class BookingController extends JFrame {
         hideMenuButtons();
         view.getLabel1().setVisible(false); //hide welcome title
         view.getLabel2().setVisible(true); //display a different title
-        
+
         view.getTextArea1().setVisible(true); //text area where list will be
         view.getTextArea1().setEditable(false);
-        
+
         view.getBackButton().setVisible(true);
         setSize(450, 350); //resize frame
         this.model = new Booking(2); //get days list to be output
@@ -112,19 +112,33 @@ public class BookingController extends JFrame {
     private void eventHandlerContactButton() {
 
     }
-    
+
     //backButton
-    private void eventHandlerBackButton(){
-        view.getLabel1().setVisible(true); //show welcome title
-        view.getLabel2().setVisible(false); //hide a different title
-        
-        view.getTextArea1().setVisible(false); //text area where list will be
-        
-        view.getBackButton().setVisible(false);
+    private void eventHandlerBackButton() {
+        hideAllComponents(); //reset frame component layout
+        showMenu(); //show menu components
         setSize(MENU_WIDTH, MENU_LENGTH); //resize frame back to original
         showMenu();
     }
     //========= Methods =========
+
+    /*
+    * Hide all components in order to reset frame and 
+    * enable only the necessary components
+     */
+    public void hideAllComponents() {
+        view.getBookingButton().setVisible(false);
+        view.getAvailabilityButton().setVisible(false);
+        view.getCurrencyButton().setVisible(false);
+        view.getReviewButton().setVisible(false);
+        view.getContactButton().setVisible(false);
+        view.getBackButton().setVisible(false);
+        view.getLabel1().setVisible(false);
+        view.getLabel2().setVisible(false);
+        view.getTextArea1().setVisible(false);
+
+    }
+
     //hide menu buttons to proceed with other functions
     public void hideMenuButtons() {
         view.getBookingButton().setVisible(false);
@@ -133,7 +147,7 @@ public class BookingController extends JFrame {
         view.getReviewButton().setVisible(false);
         view.getContactButton().setVisible(false);
     }
-    
+
     //show menu buttons 
     public void showMenu() {
         view.getLabel1().setVisible(true);
