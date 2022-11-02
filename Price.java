@@ -1,4 +1,6 @@
-package assessment;
+package Assignment2;
+
+import Assignment1.*;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -9,7 +11,7 @@ package assessment;
 
 /**
  *
- * @author Dmitry Kirkov
+ * @author Dmitry Kirov
  */
 public class Price {
 
@@ -21,12 +23,13 @@ public class Price {
     static double highPrice = 0;
     private static double customerBill = 0;
     static int rooms;
+    static String unit_information = "";
     static Units units = new Units();
 
     public static void chosenUnitPrice(int unit_num, int adults, int childs) {
 
-//        units.downloadUnitsInformation();no need any more
-        String unit_information = units.returnSelectedUnit(unit_num);
+        units.downloadUnitsInformation();
+        unit_information = units.returnSelectedUnit(unit_num);
 
         System.out.println("Unit info: " + unit_information);
         if (unit_information.contains("low")) {

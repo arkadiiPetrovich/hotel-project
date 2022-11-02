@@ -1,10 +1,12 @@
-package assessment;
+package Assignment2;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+import Assignment1.*;
 import java.util.Random;
+
 /**
  *
  * @author Lars Bosales
@@ -40,9 +42,12 @@ public final class BankTransfer extends Payment{
     
     private static void generateBankNum(){
         Random rand = new Random();
-        Card.prefix = rand.nextInt(999999-100000)+100000; //6 digits
-        Card.body = rand.nextInt(9999999-1000000)+1000000; //7 digits
-        Card.suffix = rand.nextInt(999-10)+10; //2-3 digits
+        //Card.prefix = rand.nextInt(100000, 999999); //6 digits
+        Card.prefix = rand.nextInt(999999); //6 digits
+        //Card.body = rand.nextInt(1000000, 9999999); //7 digits
+        Card.body = rand.nextInt(9999999); //7 digits
+        //Card.suffix = rand.nextInt(10, 999); //2-3 digits
+        Card.suffix = rand.nextInt(999); //2-3 digits
 
         setHotelBankNum(Card.prefix + "-" + Card.body + "-" + Card.suffix);
     }

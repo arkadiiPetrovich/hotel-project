@@ -1,4 +1,6 @@
-package assessment;
+package Assignment2;
+
+import Assignment1.*;
 
 
 /*
@@ -113,19 +115,19 @@ public final class Cash extends Payment{
         
         //Converted using values from Rates enum
         switch(userCurrency){
-            case "JPY" : {
+            case "JPY": {
                 convertedPrice = total * Rates.JPY.rate;
             }
-            case "CNY" : {
+            case "CNY": {
                 convertedPrice = total * Rates.CNY.rate;
             }
-            case "EUR" : {
+            case "EUR": {
                 convertedPrice = total * Rates.EUR.rate;
             }
-            case "USD" : {
+            case "USD": {
                 convertedPrice = total * Rates.USD.rate;
             }
-            case "AUD" : {
+            case "AUD": {
                 convertedPrice = total * Rates.AUD.rate;
             }    
         }

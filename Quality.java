@@ -1,4 +1,6 @@
-package assessment;
+package Assignment2;
+
+
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -6,134 +8,77 @@ package assessment;
  * and open the template in the editor.
  */
 //package javaapplication2;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-
-import java.sql.DatabaseMetaData;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.PreparedStatement;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  *
- * @author Dmitry Kirkov
+ * @author Dmitry Kirov
  */
 public class Quality {
-//!!! Make sure no unwanted signs in username!!!
 
     private Files file = new Files();
     private Map<String, String> units = new HashMap<String, String>();
-    private Statement stat;
-    private ResultSet rs;
 
-    public Quality() {
-        checkIfQualityTableExists();
+    public void getQualityInformation() {
+        file.downloadQualityInformation(this.units);
+/*        try {
+            BufferedReader data = new BufferedReader(new FileReader(this.file.returnQualiltyFileLocation()));
+            String line = "";
+            while ((line = data.readLine()) != null) {
+                this.units.put(line.substring(0, line.indexOf(":")), line.substring(line.indexOf(":")));
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("Something wrong with Units data file");
+        } catch (IOException e) {
+            System.out.println("IOException in Units data.");
+        }*/
+        System.out.println(this.units);
     }
 
-    //If Quality table not exists in data base creates new one
-    private void checkIfQualityTableExists() {//fix getting null from txt file
-        DatabaseMetaData dm;
+    public void addComment(String unit_number, String comment) {
         try {
-            dm = this.file.getConnection().getMetaData();
-            this.rs = dm.getTables(null, null, "QUALITY", null);
-            if (this.rs.next()) {//table exist
-                System.out.println("Table QUALITY exists");
-            } else {
-                getQualityInformation();
-                this.stat = this.file.getConnection().createStatement();
-                this.stat.executeUpdate("CREATE TABLE QUALITY(UNIT_NUM INT, FULLNAME VARCHAR(50), COMMENT VARCHAR(1000), RATING INT)");
+            BufferedReader data = new BufferedReader(new FileReader(this.file.returnQualiltyFileLocation()));
+            String new_information = String.valueOf(this.units.get(unit_number));
+            if (this.units.containsKey(unit_number)) {
+                if (!new_information.contains("null")) {
 
-                //Add information to the table
-                for (String i : this.units.keySet()) {
-                    ArrayList<String> temporary = new ArrayList<>();
-                    String[] spliter = this.units.get(i).replace(":", "").split("@");
-                    for (String a : spliter) {
-                        temporary.add(a);
-                    }
-
-                    for (String a : temporary) {
-                        if (!a.equals("null")) {
-                            String name = a.substring(a.indexOf("[") + 1, a.indexOf("]")).trim();
-                            String comment = a.substring(0, a.lastIndexOf("[")).trim();
-                            int rating = Integer.valueOf(a.substring(a.indexOf("]") + 1));
-                            PreparedStatement pstat = this.file.getConnection().prepareStatement("INSERT INTO QUALITY(UNIT_NUM, FULLNAME, COMMENT, RATING) VALUES(?, ?, ?, ?)");
-                            pstat.setInt(1, Integer.valueOf(i));
-                            pstat.setString(2, name);
-                            pstat.setString(3, comment);
-                            pstat.setInt(4, rating);
-                            pstat.executeUpdate();
-                            pstat.close();
-//                        this.stat.executeUpdate("INSERT INTO QUALITY VALUES(" + Integer.valueOf(i) + ", \'" + name + "\', \'" 
-//                                +comment+"\', "+rating+")");
-                        }
-                    }
+                    new_information += "@" + comment;
+                    this.units.replace(unit_number.trim(), new_information.trim());
+                } else if (new_information.contains("null")) {
+                    new_information = ":" + comment;
+                    this.units.replace(unit_number.trim(), new_information.trim());
+                } else {
+                    System.out.println("Something wrong with new comment.");
                 }
-
-                this.rs.close();
-                this.stat.close();
-                System.out.println("Table QUALITY created in data base.");
-            }
-        } catch (SQLException e) {
-            System.out.println("SQL exseptions QUALITY checkIfUnitTableExist " + e.getMessage());
-        } catch (NumberFormatException e) {
-            System.out.println("Number Format Exception in QUALITY checkIfUnitTableExist(): " + e.getMessage());
-        } catch (StringIndexOutOfBoundsException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    private void getQualityInformation() {
-        this.file.downloadQualityInformation(this.units);
-        //System.out.println(this.units);
-    }
-
-    public void addComment(int unit_number, String name, String comment, int rating) {
-        try {
-            //DatabaseMetaData dm = file.getConnection().getMetaData();
-            Units unit = new Units();
-            if (unit.checkUnit(String.valueOf(unit_number)) == true) {
-                System.out.println("\nThe unit number " + unit_number + " exists");
-                PreparedStatement pstat = this.file.getConnection().prepareStatement("INSERT INTO QUALITY(UNIT_NUM, FULLNAME, COMMENT, RATING) VALUES(?, ?, ?, ?)");
-                pstat.setInt(1, unit_number);
-                pstat.setString(2, name);
-                pstat.setString(3, comment);
-                pstat.setInt(4, rating);
-                pstat.executeUpdate();
-                pstat.close();
-                System.out.println("New comment saved.\n");
+                file.qualityFileWriter(this.units);
             } else {
-                System.out.println("\nThe unit number " + unit_number + " not exists");
-                System.out.println("The comment not added.\n");
+                System.out.println("Unit not exist");
             }
-        } catch (SQLException e) {
-            System.out.println("SQL Exception Quality addComment() " + e.getMessage());
-        } catch (NumberFormatException e) {
-            System.out.println("Number Format Exception Quality addComment() " + e.getMessage());
-            System.out.println("Enter a whole number\n");
+        } catch (FileNotFoundException e) {
+            System.out.println("File not Found");
         }
     }
 
-    public void showUnitComments(String unit_number) {
-        try {
-            this.stat = this.file.getConnection().createStatement();
-            this.rs = this.stat.executeQuery("SELECT * FROM QUALITY WHERE UNIT_NUM = " + unit_number);
-            System.out.println("Comments for Unit " + unit_number);
-            while (this.rs.next()) {
-                System.out.println("Unit " + unit_number + ": " + this.rs.getString(3) + " (" + this.rs.getString(2) + "). RATING " + this.rs.getInt(4));
-            }
-        } catch (SQLException e) {
-            System.out.println("SQL Exception Quality showUnitComment() " + e.getMessage());
-        } catch (NumberFormatException e) {
-            System.out.println("\nNumber Format Exception Quality showUnitComment() " + e.getMessage());
-            System.out.println("Eneter a whole number.");
+    public String showUnitComments(String unit_number) {
+        ArrayList<String> comments = new ArrayList<>();
+        String string = this.units.get(unit_number);
+        String out = "";
+        String[] spliter = string.replaceAll(":", "").split("@");
+//        System.out.println(spliter[1]);
+        for (int i = 0; i < spliter.length; i++) {
+            comments.add(spliter[i].substring(0, spliter[i].lastIndexOf(')') + 1) + " Rating: " + spliter[i].substring(spliter[i].lastIndexOf(')') + 1));
         }
-
+        for(String a:comments){
+            out += a;
+        }
+        return out;
     }
+
+    
 }

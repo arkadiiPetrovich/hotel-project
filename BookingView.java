@@ -26,13 +26,16 @@ public class BookingView extends JPanel {
     private JButton currencyButton;
     private JButton reviewButton;
     private JButton contactButton;
-    private JButton backButton;
+    private JButton menuButton;
+    private JButton checkReviewButton;
+    private JButton writeReviewButton;
 
     //Labels
     private JLabel label1;
     private JLabel label2;
     private JLabel label3;
     private JLabel label4;
+    private JLabel label5;
     
     //TextArea
     private JTextArea textArea1;
@@ -78,11 +81,25 @@ public class BookingView extends JPanel {
         add(contactButton);
         
         //backButton Attributes
-        backButton = new JButton("Go Back");
-        backButton.setLocation(130, 250);
-        backButton.setSize(150, 30);
-        backButton.setVisible(false);
-        add(backButton);
+        menuButton = new JButton("Go Back");
+        menuButton.setLocation(130, 250);
+        menuButton.setSize(150, 30);
+        menuButton.setVisible(false);
+        add(menuButton);
+        
+        //checkReviewButton Attributes
+        checkReviewButton = new JButton("Check Reviews");
+        checkReviewButton.setLocation(70,30);
+        checkReviewButton.setSize(150, 30);
+        checkReviewButton.setVisible(false);
+        add(checkReviewButton);
+        
+        //writeReviewButton Attributes
+        writeReviewButton = new JButton("Write Reviews");
+        writeReviewButton.setLocation(70, 70);
+        writeReviewButton.setSize(150, 30);
+        writeReviewButton.setVisible(false);
+        add(writeReviewButton);
         
         //===== Labels =====
         //label1 attributes
@@ -111,6 +128,13 @@ public class BookingView extends JPanel {
         label4.setSize(300, 20);
         label4.setVisible(false);
         add(label4);
+        
+        //label5 attributes
+        label5 = new JLabel("## Current Reviews ##");
+        label5.setLocation(190, 0);
+        label5.setSize(300, 20);
+        label5.setVisible(false);
+        add(label5);
         
         //===== TextArea =====
         //textArea1 attributes
@@ -203,7 +227,7 @@ public class BookingView extends JPanel {
      * @return the backButton
      */
     public JButton getBackButton() {
-        return backButton;
+        return menuButton;
     }
 
     /**
@@ -225,6 +249,27 @@ public class BookingView extends JPanel {
      */
     public JTextArea getTextArea2() {
         return textArea2;
+    }
+
+    /**
+     * @return the checkReviewButton
+     */
+    public JButton getCheckReviewButton() {
+        return checkReviewButton;
+    }
+
+    /**
+     * @return the writeReviewButton
+     */
+    public JButton getWriteReviewButton() {
+        return writeReviewButton;
+    }
+
+    /**
+     * @return the label5
+     */
+    public JLabel getLabel5() {
+        return label5;
     }
 
 }

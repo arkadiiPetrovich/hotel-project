@@ -1,4 +1,4 @@
-package assessment;
+package Assignment2;
 
 
 import java.util.InputMismatchException;
@@ -12,9 +12,9 @@ import java.util.Scanner;
 //package assigment1;
 /**
  *
- * @author Dmitry Kirkov + Lars Bosales
+ * @author Dmitry Kirov + Lars Bosales
  */
-public class Main {
+public class CUIMain {
 
     static Scanner scan = new Scanner(System.in);
     static int choice = 0; //default
@@ -93,7 +93,7 @@ public class Main {
                 //userName = scan.next();
 
                 //get current bookings
-                Booking book = new Booking(); //get info and display it
+                Booking book = new Booking(2); //get info and display it
                 return 0; //repeat
             }
             //==================================================================
@@ -145,7 +145,7 @@ public class Main {
         System.out.println("\nChecking Bookings. . .\n");
 
         do {
-            Booking book = new Booking(); //get info
+            Booking book = new Booking(2); //get info
             System.out.println("Choose a day to book!");
             dayChoice = getInput();//dayChoice starts at 0, not 1
             if (dayChoice > 0 && dayChoice <= 7) { //0 < input < 7
@@ -175,12 +175,6 @@ public class Main {
         Price.chosenUnitPrice(unitChoice, adults, children);
 
         System.out.println("Proceeding to payment . . .");
-    }
-
-    //==========================================================================
-    public static String getBooking() {
-        //needs to be a summary?
-        return "## Your Booking ##";
     }
 
     //==========================================================================
@@ -239,7 +233,7 @@ public class Main {
                 unit_num = unit_num.trim();
                 if (unit_num.equals("x")) {
                     return;
-                } else if (units.checkUnit(unit_num) == true) {
+                } else if (units.checkSelectedUnit(unit_num) == true) {
                     q.showUnitComments(unit_num);
                 } else {
                     System.out.println("Something wrong. Try again.");
@@ -250,7 +244,7 @@ public class Main {
                 unit_num = unit_num.trim();
                 if (unit_num.equals("x")) {
                     return;
-                } else if (units.checkUnit(unit_num) == true) {
+                } else if (units.checkSelectedUnit(unit_num) == true) {
                     units.selectedUnit(Integer.parseInt(unit_num));
                     System.out.print("Enter your fullname:");
                     String user_name = scan.nextLine();
@@ -308,7 +302,7 @@ public class Main {
                     
                     boolean check = unit.checkSelectedUnit(String.valueOf(unit_number));
                     if (check == true) {
-                        System.out.println("\nYou have chose unitÑŽ");
+                        System.out.println("\nYou have chose unitÃ‘Å½");
 
                         Price.chosenUnitPrice(unit_number, adults, childs);
                         scan.nextLine();
@@ -325,5 +319,4 @@ public class Main {
             }
         }
     }
-
 }

@@ -1,4 +1,4 @@
-package assessment;
+package Assignment2;
 
 
 import java.util.ArrayList;
@@ -27,9 +27,10 @@ public class Payment implements Transaction {
     //Objects + Declarations
     ArrayList<String> paymentTypes;
     Units u = new Units();
-    Booking calendar = new Booking();
+    Booking book = new Booking(2);
     Random rand = new Random();
-    int confirmationID = rand.nextInt(MAX-MIN)+MIN; //confirmation ID
+    //int confirmationID = rand.nextInt(MIN, MAX); //confirmation ID
+    int confirmationID = rand.nextInt(MAX); //confirmation ID
     static Scanner scan = new Scanner(System.in);
 
     //General fields
@@ -108,7 +109,8 @@ public class Payment implements Transaction {
                 //Once all details have been recieved, create the "Card" object
                 Card card;
                 card = new Card(fname, lname, accountNum, bank, expMonth, expYear);
-
+                book.updateAvailability(CUIMain.dayChoice); //update txt file
+                
                 //Transaction summary
                 reciept("Card", email);
                 card.getCardDetails(); //display card details
@@ -141,6 +143,7 @@ public class Payment implements Transaction {
                 }
                 //Create the cash object
                 Cash cash = new Cash(fname, lname, cashToPay);
+                book.updateAvailability(CUIMain.dayChoice); //update txt file
 
                 //Transaction summary
                 reciept("Cash", email); //display the general summary of the transaction
@@ -166,6 +169,7 @@ public class Payment implements Transaction {
                 }
                 //Create Bank Transfer object
                 BankTransfer bt = new BankTransfer(fname, lname, accountNum, bank);
+                book.updateAvailability(CUIMain.dayChoice); //update txt file
 
                 //Transaction summary
                 reciept("Bank Transfer", email);
@@ -190,7 +194,8 @@ public class Payment implements Transaction {
                 }
                 //Create Bank Transfer object
                 BankTransfer bt = new BankTransfer(fname, lname, accountNum, bank);
-
+                book.updateAvailability(CUIMain.dayChoice); //update txt file
+                
                 //Transaction summary
                 reciept("Bank Transfer", email);
                 bt.getTransferDetails();
@@ -211,7 +216,7 @@ public class Payment implements Transaction {
     @Override
     public void reciept(String paymentType, String email) {
         System.out.println("\n### R E C E I P T ###");
-        System.out.println("DATE: " + calendar.currentDate);
+        System.out.println("DATE: " + book.currentDate);
         System.out.println("-- CUSTOMER DETAILS --");
         System.out.println("Name: " + fname + " " + lname);
         System.out.println("Email: " + email);
@@ -221,7 +226,7 @@ public class Payment implements Transaction {
         //------------------------------------------
         //need reference for what was booked
         System.out.println("# BOOKING DETAILS #");
-        System.out.println(u.returnSelectedUnit(Main.unitChoice));
+        System.out.println(u.returnSelectedUnit(CUIMain.unitChoice));
         //need reference for unit prices with Dmitry
         System.out.println("TOTAL: $" + String.format("%.2f", total) + " NZD");
         //------------------------------------------
@@ -230,6 +235,7 @@ public class Payment implements Transaction {
         System.out.println("PAYMENT TYPE: " + paymentType);
         System.out.println("Bank: " + bank);
         System.out.println("Account no. " + accountNum);
+        System.out.println("Hotel Bank no. " + BankTransfer.getHotelBankNum());
     }
 
     //================================================

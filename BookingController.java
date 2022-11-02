@@ -76,6 +76,20 @@ public class BookingController extends JFrame {
                 eventHandlerBackButton();
             }
         });
+        //checkReviewButton
+        view.getCheckReviewButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                eventHandlerCheckReviewButton();
+            }
+        });
+        //backButton
+        view.getWriteReviewButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                eventHandlerWriteReviewButton();
+            }
+        });
     }
     //========= Event Handler Methods =========
 
@@ -110,6 +124,13 @@ public class BookingController extends JFrame {
     //reviewButton
     private void eventHandlerReviewButton() {
         System.out.println("System Message: Proceeding to Reviews...");
+        hideAllComponents(); //hide all components
+        setSize(300, 200); //resize frame
+        //reveal only needed components
+        view.getBackButton().setVisible(true); //display back button
+        view.getBackButton().setLocation(70, 110);
+        view.getCheckReviewButton().setVisible(true);
+        view.getWriteReviewButton().setVisible(true);
     }
 
     //contactButton
@@ -118,7 +139,7 @@ public class BookingController extends JFrame {
         hideAllComponents();
         view.getBackButton().setVisible(true); //display back button
         view.getBackButton().setLocation(130, 150);
-        
+
         //display the titles for Contact details
         view.getLabel3().setVisible(true);
         String contactDetails = "";
@@ -127,12 +148,11 @@ public class BookingController extends JFrame {
         contactDetails += "\nEmail: " + hotelEmail;
         contactDetails += "\nPhone: " + hotelPhone;
         contactDetails += "\n==========================================";
-        
-        
+
         setSize(450, 250); //resize frame
         view.getTextArea2().setVisible(true);
         view.getTextArea2().setText(contactDetails);
-   
+
     }
 
     //backButton
@@ -142,6 +162,33 @@ public class BookingController extends JFrame {
         showMenu(); //show menu components
         setSize(MENU_WIDTH, MENU_LENGTH); //resize frame back to original
         showMenu();
+    }
+
+    //checkReviewButton
+    private void eventHandlerCheckReviewButton() {
+        System.out.println("System Message: Proceeding to \"Checking Reviews\"...");
+        hideAllComponents(); //hide all components
+        setSize(530, 350); //resize frame
+        //reveal only needed components
+        view.getLabel5().setVisible(true); //display title "Current Reviews"
+         view.getBackButton().setVisible(true); //display back button
+        view.getBackButton().setLocation(170, 250);
+        view.getTextArea1().setVisible(true); //text area where reviews will be
+        view.getTextArea1().setLocation(25, 30);
+        view.getTextArea1().setSize(455, 175);
+        Quality reviews = new Quality();
+        reviews.getQualityInformation();
+        String unitReviews = "";
+//        for(int i = 0; i < reviews.Units.size(); i++){
+//            unitReviews += reviews.showUnitComments(i +"");
+//        }
+        view.getTextArea1().setText(unitReviews);
+        
+    }
+
+    //writeReviewButton
+    private void eventHandlerWriteReviewButton() {
+        System.out.println("System Message: Proceeding to \"Write a Review\"...");
     }
     //========= Methods =========
 
@@ -156,10 +203,13 @@ public class BookingController extends JFrame {
         view.getReviewButton().setVisible(false);
         view.getContactButton().setVisible(false);
         view.getBackButton().setVisible(false);
+        view.getCheckReviewButton().setVisible(false);
+        view.getWriteReviewButton().setVisible(false);
         view.getLabel1().setVisible(false);
         view.getLabel2().setVisible(false);
         view.getLabel3().setVisible(false);
         view.getLabel4().setVisible(false);
+        view.getLabel5().setVisible(false);
         view.getTextArea1().setVisible(false);
         view.getTextArea2().setVisible(false);
 
