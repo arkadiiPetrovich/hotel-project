@@ -5,6 +5,8 @@
  */
 package Assignment2;
 
+import static Assignment2.Payment.hotelEmail;
+import static Assignment2.Payment.hotelPhone;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
@@ -79,13 +81,14 @@ public class BookingController extends JFrame {
 
     //bookingButton
     private void eventHandlerBookingButton() {
-        System.out.println("Booking initialised, executing. . .");
+        System.out.println("System Message: Booking initialised, executing. . .");
         this.model = new Booking(1); //initialise and run methods to proceed with booking
     }
 
     //availabilityButton
     private void eventHandlerAvailabilityButton() {
-        hideMenuButtons();
+        System.out.println("System Message: Viewing Availability...");
+        hideAllComponents();
         view.getLabel1().setVisible(false); //hide welcome title
         view.getLabel2().setVisible(true); //display a different title
 
@@ -93,6 +96,7 @@ public class BookingController extends JFrame {
         view.getTextArea1().setEditable(false);
 
         view.getBackButton().setVisible(true);
+        view.getBackButton().setLocation(130, 250);
         setSize(450, 350); //resize frame
         this.model = new Booking(2); //get days list to be output
         view.getTextArea1().setText(model.getTheDays()); //put into text area
@@ -100,21 +104,40 @@ public class BookingController extends JFrame {
 
     //currencyButton
     private void eventHandlerCurrencyButton() {
-
+        System.out.println("System Message: Proceeding to Currency Converter...");
     }
 
     //reviewButton
     private void eventHandlerReviewButton() {
-
+        System.out.println("System Message: Proceeding to Reviews...");
     }
 
     //contactButton
     private void eventHandlerContactButton() {
-
+        System.out.println("System Message: Proceeding to Contact Details...");
+        hideAllComponents();
+        view.getBackButton().setVisible(true); //display back button
+        view.getBackButton().setLocation(130, 150);
+        
+        //display the titles for Contact details
+        view.getLabel3().setVisible(true);
+        String contactDetails = "";
+        contactDetails += "==========================================";
+        contactDetails += "\n                        ### CONTACT US ###";
+        contactDetails += "\nEmail: " + hotelEmail;
+        contactDetails += "\nPhone: " + hotelPhone;
+        contactDetails += "\n==========================================";
+        
+        
+        setSize(450, 250); //resize frame
+        view.getTextArea2().setVisible(true);
+        view.getTextArea2().setText(contactDetails);
+   
     }
 
     //backButton
     private void eventHandlerBackButton() {
+        System.out.println("System Message: Returning to Menu...");
         hideAllComponents(); //reset frame component layout
         showMenu(); //show menu components
         setSize(MENU_WIDTH, MENU_LENGTH); //resize frame back to original
@@ -135,17 +158,11 @@ public class BookingController extends JFrame {
         view.getBackButton().setVisible(false);
         view.getLabel1().setVisible(false);
         view.getLabel2().setVisible(false);
+        view.getLabel3().setVisible(false);
+        view.getLabel4().setVisible(false);
         view.getTextArea1().setVisible(false);
+        view.getTextArea2().setVisible(false);
 
-    }
-
-    //hide menu buttons to proceed with other functions
-    public void hideMenuButtons() {
-        view.getBookingButton().setVisible(false);
-        view.getAvailabilityButton().setVisible(false);
-        view.getCurrencyButton().setVisible(false);
-        view.getReviewButton().setVisible(false);
-        view.getContactButton().setVisible(false);
     }
 
     //show menu buttons 

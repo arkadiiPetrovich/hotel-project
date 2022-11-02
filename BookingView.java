@@ -31,9 +31,12 @@ public class BookingView extends JPanel {
     //Labels
     private JLabel label1;
     private JLabel label2;
+    private JLabel label3;
+    private JLabel label4;
     
     //TextArea
     private JTextArea textArea1;
+    private JTextArea textArea2;
 
     //========= Constructor =========
     public BookingView(Booking model) { //will initialise the components
@@ -95,6 +98,20 @@ public class BookingView extends JPanel {
         label2.setVisible(false);
         add(label2);
         
+        //label3 attributes
+        label3 = new JLabel(" ## Contact Details ##");
+        label3.setLocation(150, 0);
+        label3.setSize(300, 20);
+        label3.setVisible(false);
+        add(label3);
+        
+        //label4 attributes
+        label4 = new JLabel();
+        label4.setLocation(150, 50);
+        label4.setSize(300, 20);
+        label4.setVisible(false);
+        add(label4);
+        
         //===== TextArea =====
         //textArea1 attributes
         textArea1 = new JTextArea();
@@ -102,6 +119,13 @@ public class BookingView extends JPanel {
         textArea1.setSize(375, 175);
         textArea1.setVisible(false);
         add(textArea1);
+        
+        //textArea2 attributes
+        textArea2 = new JTextArea();
+        textArea2.setLocation(65, 30);
+        textArea2.setSize(300, 100);
+        textArea2.setVisible(false);
+        add(textArea2);
     }
     
     //## Get and Set methods ##
@@ -180,6 +204,27 @@ public class BookingView extends JPanel {
      */
     public JButton getBackButton() {
         return backButton;
+    }
+
+    /**
+     * @return the label3
+     */
+    public JLabel getLabel3() {
+        return label3;
+    }
+
+    /**
+     * @return the label4
+     */
+    public JLabel getLabel4() {
+        return label4;
+    }
+
+    /**
+     * @return the textArea2
+     */
+    public JTextArea getTextArea2() {
+        return textArea2;
     }
 
 }
