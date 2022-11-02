@@ -24,8 +24,8 @@ public class Files {
 
     private final String unit_file = "./resources/Units.txt";
     private final String quality_file = "./resources/Quality.txt";
-    private final String connectToDB = "jdbc:derby:HotelDB; create=true";
-    private final String URL = "jdbc:derby://localhost:1527/HotelDB";
+    private final String URL = "jdbc:derby:HotelDB; create=true";
+    private final String connectToDB = "jdbc:derby://localhost:1527/HotelDB";
     private final String passwordAndUser = "qwe";
     private Connection conn;
 

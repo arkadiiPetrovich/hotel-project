@@ -27,15 +27,19 @@ import java.util.Arrays;
  */
 public class Units {
 
-    public Map<String, String> units = new HashMap<>();
+    private Map<String, String> units = new HashMap<>();
     private Map<String, String> able_to_book_units = new HashMap<>();
+    private ArrayList<String> showUnits = new ArrayList<>();
     private final String file = "./resources/Units.txt";
     Files files = new Files();
+//    UserInterface inter = new UserInterface();
     private Statement stat;
     private ResultSet rs;
 
     public Units() {
         checkIfUnitsTableExist();//Creating the table with variables if not exist
+//        showAllUnits();
+//        showRecommendedUnits(this.inter.returnAdults(), this.inter.returnChilds());
     }
 
     //Checking if UNITS table exist. If not creating table and insert values
@@ -61,6 +65,7 @@ public class Units {
                                 + Integer.valueOf(temperary.get(0).replaceAll("[^0-9]", "")) + ", "
                                 + "\'" + temperary.get(1).trim() + "\', \'" + temperary.get(2).trim() + "\', " + Integer.valueOf(temp2.get(0))
                                 + ", " + Integer.valueOf(temp2.get(3)) + ")");
+
                     } else if (temp2.contains("adults")) {
                         this.stat.executeUpdate("INSERT INTO UNITS VALUES(" + Integer.valueOf(i) + ", "
                                 + Integer.valueOf(temperary.get(0).replaceAll("[^0-9]", "")) + ", "
@@ -100,7 +105,7 @@ public class Units {
         }
     }
 
-    public void showAllUnits() {
+    public ArrayList<String> showAllUnits() {
         System.out.println();
         System.out.println("Here is the list of all units");
         System.out.println("---------------------------------");
@@ -113,18 +118,27 @@ public class Units {
                 if (rs.getInt(2) == 1) {
                     System.out.println("Unit " + this.rs.getInt(1) + ": include " + this.rs.getInt(2) + " bedroom, " + this.rs.getString(3)
                             + ", " + this.rs.getString(4) + ", " + this.rs.getInt(5) + " adults and " + this.rs.getInt(6) + " childs. ");
+
+                    this.showUnits.add("Unit " + this.rs.getInt(1) + ": include " + this.rs.getInt(2) + " bedroom, " + this.rs.getString(3)
+                            + ", " + this.rs.getString(4) + ", " + this.rs.getInt(5) + " adults and " + this.rs.getInt(6) + " childs. ");
                 } else if (rs.getInt(2) > 1) {
                     System.out.println("Unit " + this.rs.getInt(1) + ": include " + this.rs.getInt(2) + " bedrooms, " + this.rs.getString(3)
+                            + ", " + this.rs.getString(4) + ", " + this.rs.getInt(5) + " adults and " + this.rs.getInt(6) + " childs. ");
+                    
+                    this.showUnits.add("Unit " + this.rs.getInt(1) + ": include " + this.rs.getInt(2) + " bedrooms, " + this.rs.getString(3)
                             + ", " + this.rs.getString(4) + ", " + this.rs.getInt(5) + " adults and " + this.rs.getInt(6) + " childs. ");
                 }
             }
             rs.close();
             stat.close();
+            
+//            this.inter.showAllUnitsInterface(this.showUnits);
         } catch (SQLException e) {
             System.out.println("SQL Exception Units showAllUnits " + e.getMessage());
         } catch (NumberFormatException e) {
             System.out.println("Number Format Exception: " + e.getMessage());
         }
+        return this.showUnits;
     }
 
     public void showSelectedUnit(int unit) {//show selected room by user
@@ -169,7 +183,7 @@ public class Units {
             this.stat = files.getConnection().createStatement();
             this.rs = this.stat.executeQuery("SELECT * FROM UNITS WHERE UNIT_NUM = " + unit);
             if (rs.next()) {
-                value += String.valueOf(rs.getInt(2)) + " bedrooms, "
+                value +="Unit "+rs.getInt(1)+" include: "+ String.valueOf(rs.getInt(2)) + " bedrooms, "
                         + rs.getString(3)//rs.getString(3) string about quantity and types of beds
                         + ", " + rs.getString(4) + ", " + String.valueOf(rs.getInt(5))
                         + " adults and " + String.valueOf(rs.getInt(6)) + " childs.";
@@ -183,7 +197,8 @@ public class Units {
         return value;
     }
 
-    public void recommendedUnit(int adult, int child) {
+    //finding units for customer based on how number of adults and childs
+    public Map<String, String> showRecommendedUnits(int adult, int child) {
         boolean finded = false;
 
         try {
@@ -201,6 +216,7 @@ public class Units {
                 System.out.println("Sorry. No suitable units for you.");
             } else if (finded == true) {
                 showAbleToBookUnits();
+//                this.inter.showRecomendedUnitsIterface(this.able_to_book_units);
             } else {
                 System.out.println("Something wrong in Units recommendedUnit()");
             }
@@ -211,6 +227,7 @@ public class Units {
         } catch (NumberFormatException e) {
             System.out.println("Number Format Exception Exceotion Units recommendedUnit() " + e.getMessage());
         }
+        return this.able_to_book_units;
     }
 
     //showing all collected information fromt recommendedUnit(int adult, int child) method
