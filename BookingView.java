@@ -26,7 +26,8 @@ public class BookingView extends JPanel {
     private JButton contactButton;
 
     //Labels
-    private JLabel welcomeTitle;
+    private JLabel label1;
+    private JLabel label2;
     //TextFields
 
     //========= Constructor =========
@@ -69,10 +70,65 @@ public class BookingView extends JPanel {
         add(contactButton);
         
         //===== Labels =====
-        welcomeTitle = new JLabel("## Welcome to Dreamland Hotels! ##");
-        welcomeTitle.setLocation(35, 15);
-        welcomeTitle.setSize(250, 20);
-        add(welcomeTitle);
+        label1 = new JLabel("## Welcome to Dreamland Hotels! ##");
+        label1.setLocation(35, 15);
+        label1.setSize(250, 20);
+        add(label1);
+        
+        label2 = new JLabel(" ## Refer to CUI after clicking an option ##");
+        label2.setLocation(25, 250);
+        label2.setSize(300, 20);
+        add(label2);
+    }
+    
+    //## Get and Set methods ##
+    /**
+     * @return the model
+     */
+    public Booking getModel() {
+        return model;
+    }
+
+    /**
+     * @return the bookingButton
+     */
+    public JButton getBookingButton() {
+        return bookingButton;
+    }
+
+    /**
+     * @return the availabilityButton
+     */
+    public JButton getAvailabilityButton() {
+        return availabilityButton;
+    }
+
+    /**
+     * @return the currencyButton
+     */
+    public JButton getCurrencyButton() {
+        return currencyButton;
+    }
+
+    /**
+     * @return the reviewButton
+     */
+    public JButton getReviewButton() {
+        return reviewButton;
+    }
+
+    /**
+     * @return the contactButton
+     */
+    public JButton getContactButton() {
+        return contactButton;
+    }
+
+    /**
+     * @return the welcomeTitle
+     */
+    public JLabel getWelcomeTitle() {
+        return label1;
     }
 
 }
