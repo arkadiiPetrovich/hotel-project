@@ -8,6 +8,8 @@ package Assignment2;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 /**
  *
@@ -24,11 +26,14 @@ public class BookingView extends JPanel {
     private JButton currencyButton;
     private JButton reviewButton;
     private JButton contactButton;
+    private JButton backButton;
 
     //Labels
     private JLabel label1;
     private JLabel label2;
-    //TextFields
+    
+    //TextArea
+    private JTextArea textArea1;
 
     //========= Constructor =========
     public BookingView(Booking model) { //will initialise the components
@@ -69,16 +74,34 @@ public class BookingView extends JPanel {
         contactButton.setSize(150, 30);
         add(contactButton);
         
+        //backButton Attributes
+        backButton = new JButton("Go Back");
+        backButton.setLocation(130, 250);
+        backButton.setSize(150, 30);
+        backButton.setVisible(false);
+        add(backButton);
+        
         //===== Labels =====
+        //label1 attributes
         label1 = new JLabel("## Welcome to Dreamland Hotels! ##");
         label1.setLocation(35, 15);
         label1.setSize(250, 20);
         add(label1);
         
-        label2 = new JLabel(" ## Refer to CUI after clicking an option ##");
-        label2.setLocation(25, 250);
+        //label2 attributes
+        label2 = new JLabel(" ## Availability List ##");
+        label2.setLocation(150, 0);
         label2.setSize(300, 20);
+        label2.setVisible(false);
         add(label2);
+        
+        //===== TextArea =====
+        //textArea1 attributes
+        textArea1 = new JTextArea();
+        textArea1.setLocation(25, 30);
+        textArea1.setSize(375, 175);
+        textArea1.setVisible(false);
+        add(textArea1);
     }
     
     //## Get and Set methods ##
@@ -128,7 +151,35 @@ public class BookingView extends JPanel {
      * @return the welcomeTitle
      */
     public JLabel getWelcomeTitle() {
+        return getLabel1();
+    }
+
+    /**
+     * @return the label1
+     */
+    public JLabel getLabel1() {
         return label1;
+    }
+
+    /**
+     * @return the label2
+     */
+    public JLabel getLabel2() {
+        return label2;
+    }
+
+    /**
+     * @return the field1
+     */
+    public JTextArea getTextArea1() {
+        return textArea1;
+    }
+
+    /**
+     * @return the backButton
+     */
+    public JButton getBackButton() {
+        return backButton;
     }
 
 }

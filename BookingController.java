@@ -17,6 +17,9 @@ import static javax.swing.JFrame.EXIT_ON_CLOSE;
 public class BookingController extends JFrame {
 
     //========= Fields =========
+    private static final int MENU_WIDTH = 300;
+    private static final int MENU_LENGTH = 350;
+    
     //Based on MVC model
     private Booking model; //M
     private BookingView view; //V
@@ -24,7 +27,7 @@ public class BookingController extends JFrame {
     //========= Constructor =========
     public BookingController() {
         setDefaultCloseOperation(EXIT_ON_CLOSE); //stop runtime on exit
-        setSize(300, 350); //frame size
+        setSize(MENU_WIDTH, MENU_LENGTH); //frame size
         this.view = new BookingView(this.model); //instantiate the panel
         add(view); //add to the Frame
 
@@ -64,6 +67,13 @@ public class BookingController extends JFrame {
                 eventHandlerContactButton();
             }
         });
+        //backButton
+        view.getBackButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                eventHandlerBackButton();
+            }
+        });
     }
     //========= Event Handler Methods =========
 
@@ -75,12 +85,22 @@ public class BookingController extends JFrame {
 
     //availabilityButton
     private void eventHandlerAvailabilityButton() {
-        this.model = new Booking(2);
+        hideMenuButtons();
+        view.getLabel1().setVisible(false); //hide welcome title
+        view.getLabel2().setVisible(true); //display a different title
+        
+        view.getTextArea1().setVisible(true); //text area where list will be
+        view.getTextArea1().setEditable(false);
+        
+        view.getBackButton().setVisible(true);
+        setSize(450, 350); //resize frame
+        this.model = new Booking(2); //get days list to be output
+        view.getTextArea1().setText(model.getTheDays()); //put into text area
     }
 
     //currencyButton
     private void eventHandlerCurrencyButton() {
-        
+
     }
 
     //reviewButton
@@ -91,6 +111,37 @@ public class BookingController extends JFrame {
     //contactButton
     private void eventHandlerContactButton() {
 
+    }
+    
+    //backButton
+    private void eventHandlerBackButton(){
+        view.getLabel1().setVisible(true); //show welcome title
+        view.getLabel2().setVisible(false); //hide a different title
+        
+        view.getTextArea1().setVisible(false); //text area where list will be
+        
+        view.getBackButton().setVisible(false);
+        setSize(MENU_WIDTH, MENU_LENGTH); //resize frame back to original
+        showMenu();
+    }
+    //========= Methods =========
+    //hide menu buttons to proceed with other functions
+    public void hideMenuButtons() {
+        view.getBookingButton().setVisible(false);
+        view.getAvailabilityButton().setVisible(false);
+        view.getCurrencyButton().setVisible(false);
+        view.getReviewButton().setVisible(false);
+        view.getContactButton().setVisible(false);
+    }
+    
+    //show menu buttons 
+    public void showMenu() {
+        view.getLabel1().setVisible(true);
+        view.getBookingButton().setVisible(true);
+        view.getAvailabilityButton().setVisible(true);
+        view.getCurrencyButton().setVisible(true);
+        view.getReviewButton().setVisible(true);
+        view.getContactButton().setVisible(true);
     }
 
     //========= Main =========
