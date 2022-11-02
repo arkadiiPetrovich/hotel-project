@@ -12,10 +12,16 @@ package assessment;
 public class Test {
 
     public static void main(String[] args) {
-        
+        UserInterface UI=new UserInterface();
+//        UI.errorMessageFrame();
+//        unitsClass();
+        //qualityClass();
+        //UserInterface UI = new UserInterface();
+        //UI.test();
+        System.out.println("Returned to menu!!!!!!!!!!!!!!!!!!!!!!!!");
     }
 
-    private void unitsClass() {//cooperate with DB
+    private static void unitsClass() {//cooperate with DB
         Units unit = new Units();
 //        unit.downloadUnitsInformation();
 //        unit.showAllUnits();
@@ -25,10 +31,10 @@ public class Test {
 //        System.out.println(unit.checkUnit("2"));
     }
 
-    private void qualityClass() {
+    private static void qualityClass() {
         Quality qu = new Quality();
 //        qu.addComment(6, "AAA AAA", "Heelo can't get \"AAA\"", 0);
-//        qu.showUnitComments("1");
+        qu.showUnitsComments();
     }
 
     private void priceClass() {
