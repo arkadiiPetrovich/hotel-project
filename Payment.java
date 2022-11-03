@@ -98,7 +98,6 @@ public class Payment implements Transaction {
                 try {
                     askUserDetails();
                     askTransport();
-                    System.out.println("(Press enter to continue)");
                     scan.nextLine(); //'flush' scanner to move from char to String input
                     askBankDetails();
                     scan.nextLine(); //flush again

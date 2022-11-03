@@ -7,16 +7,15 @@ package Assignment2;
  */
 //package assigment1;
 
-import Assignment1.*;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
+
 
 /**
  *
@@ -48,7 +47,7 @@ public class Units {
     //gets info about units
     public String showAllUnits() {
         String out = "";
-        out += "Here is the list of all units";
+        out += "Unit #: # of bedrooms, beds, price range, best for # of people";
         out +="\n-----------------------------";
         for (String   i : this.units.keySet()) {
             out +="\nUnit " + this.units.get(i);
@@ -62,6 +61,11 @@ public class Units {
 
     public String returnSelectedUnit(int unit) {
         return Price.unit_information;
+    }
+    
+    //Return the units map
+    public Map getUnitMap(){
+        return this.units;
     }
 
     public boolean recommendedUnit(int adult, int child) {//check what unit user able to book
@@ -93,13 +97,15 @@ public class Units {
         return finded;
     }
 
-    public void showAbleToBookUnits() {
-        System.out.println("\nHere is the list of all units you able to book.\n");
-        System.out.println("Formatted as:");
-        System.out.println("Unit number: number of bedrooms, beds, price range, number of people.");
+    public String showAbleToBookUnits() {
+//        System.out.println("\nHere is the list of all units you able to book.\n");
+//        System.out.println("Formatted as:");
+        String out = "";
+        out += "Unit #: #no.bedrooms, beds, price range, best for.\n";
         for (String i : this.able_to_book_units.keySet()) {
-            System.out.println("Unit " + i + " include: " + this.able_to_book_units.get(i));
+            out += "Unit " + i + " include: " + this.able_to_book_units.get(i) + "\n";
         }
+        return out;
     }
 
     public boolean checkSelectedUnit(String unit) {
