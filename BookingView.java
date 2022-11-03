@@ -12,7 +12,9 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JList;
-        
+import javax.swing.JRadioButton;
+import javax.swing.ButtonGroup;
+
 /**
  *
  * @author Lars Bosales, 20112844
@@ -42,6 +44,7 @@ public class BookingView extends JPanel {
     private JLabel label7;
     private JLabel label8;
     private JLabel label9;
+    private JLabel label10;
 
     //TextArea
     private JTextArea textArea1;
@@ -52,11 +55,20 @@ public class BookingView extends JPanel {
     private JTextField field2;
     private JTextField field3;
     private JTextField field4;
-    
+
     //JList
-    private final String[] availableDays = {"Monday","Thursday","Sunday"};
+    private final String[] availableDays = {"Monday", "Thursday", "Sunday"};
     private JList<String> dayList;
-    
+
+    //radio buttons + button group
+    private ButtonGroup rbGroup;
+    private JRadioButton rButton1;
+    private JRadioButton rButton2;
+    private JRadioButton rButton3;
+
+    //option pane
+    private JOptionPane errorPane;
+
     //========= Constructor =========
     public BookingView(Booking model) { //will initialise the components
         //initialise
@@ -172,6 +184,11 @@ public class BookingView extends JPanel {
         label9.setVisible(false);
         label9.setSize(300, 20);
         add(label9);
+        //label10 attributes
+        label10 = new JLabel();
+        label10.setVisible(false);
+        label10.setSize(300, 20);
+        add(label10);
 
         //===== TextArea =====
         //textArea1 attributes
@@ -187,38 +204,68 @@ public class BookingView extends JPanel {
         textArea2.setSize(300, 100);
         textArea2.setVisible(false);
         add(textArea2);
-        
+
         //===== TextField =====
         //field1 attributes
         field1 = new JTextField();
         field1.setVisible(false);
         add(field1);
-        
+
         //field2 attributes
         field2 = new JTextField();
         field2.setVisible(false);
         add(field2);
-        
+
         //field3 attributes
         field3 = new JTextField();
         field3.setVisible(false);
         add(field3);
-        
+
         //field4 attributes
         field4 = new JTextField();
         field4.setSize(100, 30);
         field4.setLocation(600, 340);
         field4.setVisible(false);
         add(field4);
-        
+
         //===== JList =====
-        dayList = new JList<String> (availableDays);
-        dayList.setLocation(190, 250);
+        dayList = new JList<String>(availableDays);
+        dayList.setLocation(100, 250);
         dayList.setSize(75, 60);
         dayList.setVisible(false);
         add(dayList);
+
+        //===== RadioButton + ButtonGroup =====
+        //box1
+        rButton1 = new JRadioButton();
+        rButton1.setSize(40, 40);
+        rButton1.setVisible(false);
+        add(rButton1);
+
+        //box2
+        rButton2 = new JRadioButton();
+        rButton2.setSize(40, 40);
+        rButton2.setVisible(false);
+        add(rButton2);
+
+        //box3
+        rButton3 = new JRadioButton();
+        rButton3.setSize(40, 40);
+        rButton3.setVisible(false);
+        add(rButton3);
         
-    }
+        rbGroup = new ButtonGroup();
+        rbGroup.add(rButton1);
+        rbGroup.add(rButton2);
+        rbGroup.add(rButton3);
+        
+        //===== Option Pane =====
+        errorPane = new JOptionPane( "Error");
+        //errorPane.setBounds(20, 50, 250, 100);
+        errorPane.setVisible(false);
+        add(errorPane);
+
+    } //## END OF CONSTRUCTOR ##
 
     //## Get and Set methods ##
     /**
@@ -410,4 +457,45 @@ public class BookingView extends JPanel {
         return dayList;
     }
 
+    /**
+     * @return the label10
+     */
+    public JLabel getLabel10() {
+        return label10;
+    }
+
+    /**
+     * @return the errorPane
+     */
+    public JOptionPane getErrorPane() {
+        return errorPane;
+    }
+
+    /**
+     * @return the rButton1
+     */
+    public JRadioButton getrButton1() {
+        return rButton1;
+    }
+
+    /**
+     * @return the rButton2
+     */
+    public JRadioButton getrButton2() {
+        return rButton2;
+    }
+
+    /**
+     * @return the rButton3
+     */
+    public JRadioButton getrButton3() {
+        return rButton3;
+    }
+
+    /**
+     * @return the rbGroup
+     */
+    public ButtonGroup getRbGroup() {
+        return rbGroup;
+    }
 }

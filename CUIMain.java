@@ -1,6 +1,5 @@
 package Assignment2;
 
-
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -23,6 +22,7 @@ public class CUIMain {
     static int dayChoice;
     static int adults;
     static int children;
+    static BookingView bkView = new BookingView(new Booking());
 
     //variables for payment
     static String payChoice;
@@ -50,7 +50,7 @@ public class CUIMain {
         units.downloadUnitsInformation();
         units.showAllUnits();
     }
-    
+
     //==========================================================================
     public static int menu() {
         System.out.println("\n==================================");
@@ -125,56 +125,40 @@ public class CUIMain {
 
     //==========================================================================
     public static void createBooking() {
-        System.out.println("\n## You have chosen to create a booking ##");
         Units u = new Units();
         createUnits(); //get unit info then show display it
-        boolean flag = false; //flag for do-loop
 
-        System.out.println("\n### Choose a unit ###");
-        do {
-            unitChoice = getInput();
-            if (unitChoice == 1 || unitChoice == 2 || unitChoice == 3) {
-                flag = true; //redo loop
-            } else {
-                flag = false;
-            }
-        } while (flag == false); //accept only 1,2 or3
+        //Getting unit number from user in GUI
+        try {
+            String unitNum = bkView.getField1().getText(); //get from user in GUI
+            unitNum = unitNum.trim(); //take out whitespace if any
+            unitChoice = Integer.parseInt(unitNum);
+        } catch (NumberFormatException e) {
+            e.getMessage();
+        }
 
-        u.selectedUnit(unitChoice); //display the selected unit
+        u.selectedUnit(unitChoice); //display the selected unit in CUI
 
-        System.out.println("\nChecking Bookings. . .\n");
-
-        do {
-            Booking book = new Booking(2); //get info
-            System.out.println("Choose a day to book!");
-            dayChoice = getInput();//dayChoice starts at 0, not 1
-            if (dayChoice > 0 && dayChoice <= 7) { //0 < input < 7
-                book.parseInfo(dayChoice);
-                System.out.println("\nChecking Availability. . .");
-
-                if (Booking.getIsFull() == true) { //if it is full
-                    System.out.println("## Booking Status: Full ##");
-                    flag = false; //repeat loop
-                } else if (Booking.getIsFull() == false) {
-                    System.out.println("## Booking Status: Avaiilable ##");
-                    flag = true; //exit loop
-                } else {
-                    System.out.println("something went wrong with booking status!");
-                }
-            } else {
-                flag = false; //redo
-            }
-        } while (flag == false);
-
-        System.out.println("How many Adults?");
-        adults = getInput();
-        System.out.println("How many Children?");
-        children = getInput();
+        //Getting # of Adults and Children from GUI
+        //adult
+        try {
+            String adultNum = bkView.getField2().getText(); //get from user in GUI
+            adultNum = adultNum.trim(); //take out whitespace if any
+            unitChoice = Integer.parseInt(adultNum);
+        } catch (NumberFormatException e) {
+            e.getMessage();
+        }
+        //children
+        try {
+            String childNum = bkView.getField3().getText(); //get from user in GUI
+            childNum = childNum.trim(); //take out whitespace if any
+            unitChoice = Integer.parseInt(childNum);
+        } catch (NumberFormatException e) {
+            e.getMessage();
+        }
 
         System.out.println("Getting prices . . .");
         Price.chosenUnitPrice(unitChoice, adults, children);
-
-        System.out.println("Proceeding to payment . . .");
     }
 
     //==========================================================================
@@ -183,9 +167,8 @@ public class CUIMain {
         System.out.println("How would you like to pay?");
         System.out.println("Cash, Card, or Bank Transfer? (type bt for Bank Transfer)");
         //scan.nextLine(); //flush buffer as changing from int to String input
-        payChoice = scan.nextLine();
-        Payment p = new Payment(payChoice);
-        p.pay(); //begin payment
+        payChoice = (String) bkView.getDayList().getSelectedValue(); //get from GUI
+        Payment p = new Payment(payChoice); //initialise payment type value
     }
 
     //==========================================================================
@@ -299,7 +282,7 @@ public class CUIMain {
                     System.out.println("Which unit you like to book?");
 
                     int unit_number = scan.nextInt();//add exit option
-                    
+
                     boolean check = unit.checkSelectedUnit(String.valueOf(unit_number));
                     if (check == true) {
                         System.out.println("\nYou have chose unitÃ‘Å½");

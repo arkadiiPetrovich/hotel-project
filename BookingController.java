@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -26,6 +27,7 @@ public class BookingController extends JFrame {
     private Booking model; //M
     private BookingView view; //V
 
+    //other fields
     //========= Constructor =========
     public BookingController() {
         setDefaultCloseOperation(EXIT_ON_CLOSE); //stop runtime on exit
@@ -90,6 +92,29 @@ public class BookingController extends JFrame {
                 eventHandlerWriteReviewButton();
             }
         });
+
+        //Checkboxes
+        //rButton1 (Cash)
+        view.getrButton1().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                eventHandlerRButton1();
+            }
+        });
+        //rButton2 (Card)
+        view.getrButton2().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                eventHandlerRButton2();
+            }
+        });
+        //rButton3 (Bank Transfer/bt)
+        view.getrButton3().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                eventHandlerRButton3();
+            }
+        });
     }
     //========= Event Handler Methods =========
 
@@ -97,70 +122,35 @@ public class BookingController extends JFrame {
     private void eventHandlerBookingButton() {
         System.out.println("System Message: Proceeding to Booking. . .");
         //this.model = new Booking(1); //initialise and run methods to proceed with booking
-        hideAllComponents(); //hide everything to begin reshaping frame
+        resetAllComponents(); //hide everything to begin reshaping frame
         setSize(900, 500); //redefine frame size
 
         //reveal needed components
-        // # left side #
-        view.getLabel2().setVisible(true); //display a different title
-        view.getTextArea1().setVisible(true); //text area where list will be
-        view.getTextArea1().setEditable(false); //make area uneditable
         view.getBackButton().setVisible(true);
-        view.getBackButton().setLocation(350, 400);
+        view.getBackButton().setLocation(30, 400);
 
-        //Day selection list
-        view.getLabel6().setVisible(true);
-        view.getLabel6().setText("Select Day: ");
-        view.getLabel6().setLocation(120, 250);
-        view.getDayList().setVisible(true);
+        //Payment Type selection
+        view.getLabel10().setVisible(true);
+        view.getLabel10().setLocation(600, 250);
 
-        //get data to display available days
-        this.model = new Booking(2); //get days list to be output
-        view.getTextArea1().setText(model.getTheDays()); //put into text area
+        //show the radio buttons
+        view.getrButton1().setVisible(true);
+        view.getrButton1().setLocation(800, 235);
 
-        // # right side #
-        view.getLabel4().setVisible(true);
-        view.getLabel4().setLocation(580, 0);
-        view.getLabel4().setText("## Room/Unit Types ##");
-        view.getTextArea2().setVisible(true);
-        view.getTextArea2().setSize(400, 175);
-        view.getTextArea2().setLocation(450, 30);
-        view.getTextArea2().setEditable(false);
+        view.getrButton2().setVisible(true);
+        view.getrButton2().setLocation(800, 285);
 
-        //Unit, # of people selection
-        view.getLabel7().setText("Unit# :");
-        view.getLabel7().setVisible(true);
-        view.getLabel7().setLocation(555, 250);
-        view.getField1().setVisible(true);
-        view.getField1().setSize(100, 30);
-        view.getField1().setLocation(600, 250);
+        view.getrButton3().setVisible(true);
+        view.getrButton3().setLocation(800, 335);
 
-        view.getLabel8().setText("Adults# :");
-        view.getLabel8().setVisible(true);
-        view.getLabel8().setLocation(545, 300);
-        view.getField2().setVisible(true);
-        view.getField2().setSize(100, 30);
-        view.getField2().setLocation(600, 300);
-
-        view.getLabel9().setText("Children# :");
-        view.getLabel9().setVisible(true);
-        view.getLabel9().setLocation(535, 350);
-        view.getField3().setVisible(true);
-        view.getField3().setSize(100, 30);
-        view.getField3().setLocation(600, 350);
-
-        //get data to display units info
-        Units u = new Units();
-        u.downloadUnitsInformation();
-        String unitReviews = u.showAllUnits();
-        view.getTextArea2().setText(unitReviews);
-
+        dayAndUnitFrame();
+        CUIMain.makePayment(); //initialise values for payment type
     }
 
     //availabilityButton
     private void eventHandlerAvailabilityButton() {
         System.out.println("System Message: Viewing Availability...");
-        hideAllComponents();
+        resetAllComponents();
         setSize(450, 350); //resize frame
 
         //reveal needed components
@@ -182,7 +172,7 @@ public class BookingController extends JFrame {
     //reviewButton
     private void eventHandlerReviewButton() {
         System.out.println("System Message: Proceeding to Reviews...");
-        hideAllComponents(); //hide all components
+        resetAllComponents(); //hide all components
         setSize(300, 200); //resize frame
         //reveal only needed components
         view.getBackButton().setVisible(true); //display back button
@@ -194,7 +184,7 @@ public class BookingController extends JFrame {
     //contactButton
     private void eventHandlerContactButton() {
         System.out.println("System Message: Proceeding to Contact Details...");
-        hideAllComponents();
+        resetAllComponents();
         view.getBackButton().setVisible(true); //display back button
         view.getBackButton().setLocation(130, 150);
 
@@ -216,7 +206,7 @@ public class BookingController extends JFrame {
     //backButton
     private void eventHandlerBackButton() {
         System.out.println("System Message: Returning to Menu...");
-        hideAllComponents(); //reset frame component layout
+        resetAllComponents(); //reset frame component layout
         showMenu(); //show menu components
         setSize(MENU_WIDTH, MENU_LENGTH); //resize frame back to original
         showMenu();
@@ -225,7 +215,7 @@ public class BookingController extends JFrame {
     //checkReviewButton
     private void eventHandlerCheckReviewButton() {
         System.out.println("System Message: Proceeding to \"Checking Reviews\"...");
-        hideAllComponents(); //hide all components
+        resetAllComponents(); //hide all components
         setSize(530, 350); //resize frame
         //reveal only needed components
         view.getLabel5().setVisible(true); //display title "Current Reviews"
@@ -248,14 +238,90 @@ public class BookingController extends JFrame {
     private void eventHandlerWriteReviewButton() {
         System.out.println("System Message: Proceeding to \"Write a Review\"...");
     }
+
+    //Checkboxes (payment types)
+    //Cash
+    private void eventHandlerRButton1() {
+        setUserDay();
+    }
+
+    //Card
+    private void eventHandlerRButton2() {
+        setUserDay();
+    }
+
+    //BankTranser/bt
+    private void eventHandlerRButton3() {
+        setUserDay();
+    }
     //========= Methods =========
+
+    private void dayAndUnitFrame() {
+        // # left side #
+        view.getLabel2().setVisible(true); //display a different title
+        view.getTextArea1().setVisible(true); //text area where list will be
+        view.getTextArea1().setEditable(false); //make area uneditable
+
+        //Day selection list
+        view.getLabel6().setVisible(true);
+        view.getLabel6().setText("Select Day: ");
+        view.getLabel6().setLocation(30, 250);
+        view.getDayList().setVisible(true);
+
+        //get data to display available days
+        this.model = new Booking(2); //get days list to be output
+        view.getTextArea1().setText(model.getTheDays()); //put into text area
+
+        // # right side #
+        view.getLabel4().setVisible(true);
+        view.getLabel4().setLocation(580, 0);
+        view.getLabel4().setText("## Room/Unit Types ##");
+        view.getTextArea2().setVisible(true);
+        view.getTextArea2().setSize(400, 175);
+        view.getTextArea2().setLocation(450, 30);
+        view.getTextArea2().setEditable(false);
+
+        //Unit, # of people selection
+        view.getLabel7().setText("Unit# :");
+        view.getLabel7().setVisible(true);
+        view.getLabel7().setLocation(200, 250);
+        view.getField1().setVisible(true);
+        view.getField1().setSize(100, 30);
+        view.getField1().setLocation(240, 250);
+
+        view.getLabel8().setText("Adults# :");
+        view.getLabel8().setVisible(true);
+        view.getLabel8().setLocation(190, 300);
+        view.getField2().setVisible(true);
+        view.getField2().setSize(100, 30);
+        view.getField2().setLocation(240, 300);
+
+        view.getLabel9().setText("Children# :");
+        view.getLabel9().setVisible(true);
+        view.getLabel9().setLocation(180, 350);
+        view.getField3().setVisible(true);
+        view.getField3().setSize(100, 30);
+        view.getField3().setLocation(240, 350);
+
+        //get data to display units info
+        Units u = new Units();
+        u.downloadUnitsInformation();
+        String unitReviews = u.showAllUnits();
+        view.getTextArea2().setText(unitReviews);
+
+    }
 
     /*
     * Hide all components in order to reset frame and 
-    * enable only the necessary components
+    * proceed with enabling only the necessary components
      */
-    public void hideAllComponents() {
-        //buttons
+    public void resetAllComponents() {
+        
+        //Booking frame selection to be cleared
+        view.getDayList().clearSelection();
+        view.getRbGroup().clearSelection();
+        
+        //Buttons
         view.getBookingButton().setVisible(false);
         view.getAvailabilityButton().setVisible(false);
         view.getCurrencyButton().setVisible(false);
@@ -265,7 +331,7 @@ public class BookingController extends JFrame {
         view.getCheckReviewButton().setVisible(false);
         view.getWriteReviewButton().setVisible(false);
 
-        //labels
+        //Labels
         view.getLabel1().setVisible(false);
         view.getLabel2().setVisible(false);
         view.getLabel3().setVisible(false);
@@ -275,12 +341,13 @@ public class BookingController extends JFrame {
         view.getLabel7().setVisible(false);
         view.getLabel8().setVisible(false);
         view.getLabel9().setVisible(false);
+        view.getLabel10().setVisible(false);
 
-        //text areas
+        //Text areas
         view.getTextArea1().setVisible(false);
         view.getTextArea2().setVisible(false);
 
-        //text fields
+        //Text fields
         view.getField1().setVisible(false);
         view.getField2().setVisible(false);
         view.getField3().setVisible(false);
@@ -288,6 +355,11 @@ public class BookingController extends JFrame {
 
         //JList
         view.getDayList().setVisible(false);
+
+        //Radio buttons
+        view.getrButton1().setVisible(false);
+        view.getrButton2().setVisible(false);
+        view.getrButton3().setVisible(false);
     }
 
     //show menu buttons 
@@ -298,6 +370,20 @@ public class BookingController extends JFrame {
         view.getCurrencyButton().setVisible(true);
         view.getReviewButton().setVisible(true);
         view.getContactButton().setVisible(true);
+    }
+
+    //check day input from user in Booking GUI
+    public void setUserDay() {
+
+        try {
+            Booking.weekDay = Booking.getWeekDay((String) view.getDayList().getSelectedValue());
+        } catch (ClassCastException e) {
+            e.getMessage();
+        } catch (NullPointerException e) {
+            JOptionPane.showMessageDialog(null, "Error! Please select a day!");
+            e.getMessage();
+
+        }
     }
 
     //========= Main =========

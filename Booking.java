@@ -4,7 +4,7 @@ package Assignment2;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-import static Assignment2.CUIMain.createBooking;
+    import static Assignment2.CUIMain.createBooking;
 import static Assignment2.CUIMain.makePayment;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -54,6 +54,9 @@ public class Booking {
             this.daysList = "";
             getAvailabilityBooking(); //show availability
         }
+    }
+    public Booking(){
+        //default
     }
 
     //================ ### METHODS ### ================
@@ -232,7 +235,7 @@ public class Booking {
     public boolean isFull(String s) {
         StringTokenizer sTok = new StringTokenizer(s, " |");
         String[] stringAry = s.split("|");
-        String[] temp = new String[3];
+        //String[] temp = new String[3];
 
         //Iterator it = sTok.asIterator();
         while (sTok.hasMoreTokens()) {
