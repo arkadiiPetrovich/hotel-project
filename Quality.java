@@ -6,9 +6,6 @@ package assessment;
  * and open the template in the editor.
  */
 //package javaapplication2;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
@@ -17,7 +14,6 @@ import java.sql.Statement;
 import java.sql.PreparedStatement;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,6 +26,7 @@ public class Quality {
 
     private Files file = new Files();
     private Map<String, String> units = new HashMap<String, String>();
+    private ArrayList<String> comments = new ArrayList<>();
     private Statement stat;
     private ResultSet rs;
 
@@ -94,7 +91,7 @@ public class Quality {
         //System.out.println(this.units);
     }
 
-    public void addComment(int unit_number, String name, String comment, int rating) {
+    public void addComment(int unit_number, String name, String comment, int rating) {//too long comment shouldn't be able to add
         try {
             //DatabaseMetaData dm = file.getConnection().getMetaData();
             Units unit = new Units();
@@ -120,13 +117,14 @@ public class Quality {
         }
     }
 
-    public void showUnitComments(String unit_number) {
+    public ArrayList<String> showUnitsComments() {
         try {
             this.stat = this.file.getConnection().createStatement();
-            this.rs = this.stat.executeQuery("SELECT * FROM QUALITY WHERE UNIT_NUM = " + unit_number);
-            System.out.println("Comments for Unit " + unit_number);
+            this.rs = this.stat.executeQuery("SELECT * FROM QUALITY");
+            System.out.println("Comments of Units ");
             while (this.rs.next()) {
-                System.out.println("Unit " + unit_number + ": " + this.rs.getString(3) + " (" + this.rs.getString(2) + "). RATING " + this.rs.getInt(4));
+                System.out.println("Unit " + this.rs.getInt(1) + ": " + this.rs.getString(3) + " (" + this.rs.getString(2) + "). RATING " + this.rs.getInt(4));
+                this.comments.add("Unit " + this.rs.getInt(1) + ": " + this.rs.getString(3) + " (" + this.rs.getString(2) + "). RATING " + this.rs.getInt(4));
             }
         } catch (SQLException e) {
             System.out.println("SQL Exception Quality showUnitComment() " + e.getMessage());
@@ -134,6 +132,6 @@ public class Quality {
             System.out.println("\nNumber Format Exception Quality showUnitComment() " + e.getMessage());
             System.out.println("Eneter a whole number.");
         }
-
+        return this.comments;
     }
 }
