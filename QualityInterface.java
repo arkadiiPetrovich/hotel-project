@@ -50,7 +50,7 @@ public class QualityInterface extends JFrame {
         showQualityInterface(this.quality.showUnitsComments());
     }
 
-    public void showQualityInterface(ArrayList<String> string) {
+    private void showQualityInterface(ArrayList<String> string) {
         JFrame frame = new JFrame("Comments");
         frame.setTitle("Unit\'s comments");
 
@@ -184,21 +184,26 @@ public class QualityInterface extends JFrame {
         addComment.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println(String.valueOf(commentInput.getText()));
+//                System.out.println(String.valueOf(commentInput.getText()));
                 try {
                     if (String.valueOf(unitInput.getText()).trim().isEmpty()||String.valueOf(nameInput.getText()).trim().isEmpty() || String.valueOf(commentInput.getText()).trim().isEmpty() || String.valueOf(ratingInput.getText()).trim().isEmpty()) {
                         errorMessageFrame("One of the input is empty.");
-                    } else if (!String.valueOf(unitInput.getText()).trim().isEmpty()&&!String.valueOf(nameInput.getText()).trim().isEmpty() && !String.valueOf(commentInput.getText()).trim().isEmpty() && (Integer.valueOf(ratingInput.getText())<5&&Integer.valueOf(ratingInput.getText())>=0)) {
-                        if(units.checkUnit(String.valueOf(unitInput.getText()).trim())==true){
+                    } else if (!String.valueOf(unitInput.getText()).trim().isEmpty()&&!String.valueOf(nameInput.getText()).trim().isEmpty() && !String.valueOf(commentInput.getText()).trim().isEmpty() && (Integer.valueOf(ratingInput.getText())<=5&&Integer.valueOf(ratingInput.getText())>=0)) {
+                        if(nameInput.getText().length()>50){
+                        errorMessageFrame("Your name is too long. Please enter shorter version");
+                    }
+                        else if(units.checkUnit(String.valueOf(unitInput.getText()).trim())==true){
                             quality.addComment(Integer.valueOf(unitInput.getText()), String.valueOf(nameInput.getText()), String.valueOf(commentInput.getText()), Integer.valueOf(ratingInput.getText()));
                             nortificationMessageFrame("New comment added");
                             frame.dispose();
-                            QualityInterface show = new QualityInterface();
+                            
                         }else if(units.checkUnit(String.valueOf(unitInput.getText()).trim())==false){
                             errorMessageFrame("The unit is not exists");
                         }else if(Integer.valueOf(ratingInput.getText())>5||Integer.valueOf(ratingInput.getText())<0){
                             errorMessageFrame("Wrong rating input");
                         }
+                    }else{
+                        errorMessageFrame("Some intput is wrong");
                     }
                 } catch (NumberFormatException b) {
                     errorMessageFrame("Please enter a whole number in rating field or unit number.");
@@ -211,6 +216,8 @@ public class QualityInterface extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
                 //Add back to menu!!!!!!!!!!!!!!!!!!!
+                BookingControllerClass menu = new BookingControllerClass();
+                menu.eventHandlerBackButton();
             }
         });
         showUnits.addActionListener(new ActionListener(){
@@ -221,7 +228,7 @@ public class QualityInterface extends JFrame {
         });
     }
 
-    public void errorMessageFrame(String string) {
+    private void errorMessageFrame(String string) {
         JFrame frame = new JFrame("Error");
         frame.setSize(250, 200);
         frame.setLocationRelativeTo(null);
@@ -248,7 +255,7 @@ public class QualityInterface extends JFrame {
         });
     }
     
-    public void nortificationMessageFrame(String string) {
+    private void nortificationMessageFrame(String string) {
         JFrame frame = new JFrame("Nortification");
         frame.setSize(250, 200);
         frame.setLocationRelativeTo(null);
@@ -271,9 +278,11 @@ public class QualityInterface extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
+                QualityInterface show = new QualityInterface();
             }
         });
     }
+    
     private void showAllUnitsInterface() {
         ArrayList<String> unitsInformation = this.units.showAllUnits();
         JFrame frame = new JFrame("Hotel Units");

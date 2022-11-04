@@ -64,7 +64,7 @@ public class UnitsInterface extends JFrame {
         showAllUnitsInterface() ;
     }
 
-    private boolean showAllUnitsInterface() {
+    private void showAllUnitsInterface() {
         this.wait= true;
         ArrayList<String> unitsInformation = this.units.showAllUnits();
         JFrame frame = new JFrame("Hotel Units");
@@ -125,7 +125,7 @@ public class UnitsInterface extends JFrame {
                         errorMessageFrame("You can't input negative number");
                     } else if (adults > 0) {
                         frame.dispose();
-                        wait = showRecomendedUnitsIterface(adults, childs);
+                        showRecomendedUnitsIterface(adults, childs);
                     }
                 } catch (NumberFormatException a) {
                     System.out.println("Number Format Exception " + a.getMessage());
@@ -137,12 +137,13 @@ public class UnitsInterface extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
+                BookingControllerClass menu = new BookingControllerClass();
+                menu.eventHandlerBackButton();
             }
         });
-        return wait;
     }
 
-    public boolean showRecomendedUnitsIterface(int adults, int childs) {
+    private void showRecomendedUnitsIterface(int adults, int childs) {
         Map<String, String> recommendedUnits = this.units.showRecommendedUnits(adults, childs);
         JFrame frame = new JFrame("Recommended Units");
 
@@ -206,12 +207,19 @@ public class UnitsInterface extends JFrame {
                 
             }
         });
-        return wait;
+        this.backToMenu.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                BookingControllerClass menu = new BookingControllerClass();
+                menu.eventHandlerBackButton();
+            }
+            
+        });
     }
 
     
 
-    public void errorMessageFrame(String string) {
+    private void errorMessageFrame(String string) {
         JFrame frame = new JFrame("Error");
         frame.setSize(250, 200);
         frame.setLocationRelativeTo(null);

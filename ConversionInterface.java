@@ -134,13 +134,18 @@ public class ConversionInterface extends JFrame {
 
             }
         });
+        this.backToMenu.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                BookingControllerClass menu = new BookingControllerClass();
+                menu.eventHandlerBackButton();
+            }
+            
+        });
     }
 
-    private void conversionFrame() {
-
-    }
-
-    public void errorMessageFrame(String string) {
+    private void errorMessageFrame(String string) {
         JFrame frame = new JFrame("Error");
         frame.setSize(250, 200);
         frame.setLocationRelativeTo(null);
