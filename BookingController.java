@@ -36,6 +36,7 @@ public class BookingController extends JFrame {
         setSize(MENU_WIDTH, MENU_LENGTH); //frame size
         this.view = new BookingView(this.model); //instantiate the panel
         add(view); //add to the Frame
+        showMenu(); //display menu components
 
         //========= Action Listeners =========
         //bookingButton
@@ -103,6 +104,14 @@ public class BookingController extends JFrame {
             }
         });
 
+        //recieptButton
+        view.getRecieptButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                eventHandlerRecieptButton();
+            }
+        });
+
         //## RadioButtons ##
         //rButton1 (Cash)
         view.getrButton1().addItemListener(new ItemListener() {
@@ -142,9 +151,9 @@ public class BookingController extends JFrame {
                 view.getDayList().clearSelection(); //clear list selection
             }
         } catch (NullPointerException e) {
-            System.out.println("System Message: NullPointerExeption caught");
-            System.out.println("RadioButton selection cleared");
-            System.out.println("Proceeding...");
+//            System.out.println("System Message: NullPointerExeption caught");
+//            System.out.println("RadioButton selection cleared");
+//            System.out.println("Proceeding...");
             e.getMessage();
         }
 
@@ -157,6 +166,7 @@ public class BookingController extends JFrame {
         view.getBackButton().setLocation(30, 400);
 
         view.getPayDetailsButton().setVisible(true);
+        view.getPayDetailsButton().setText("Proceed to Payment");
         view.getPayDetailsButton().setLocation(525, 400);
 
         //show the radio buttons
@@ -267,10 +277,97 @@ public class BookingController extends JFrame {
     //payDetailsButton
     private void eventHandlerPayDetailsButton() {
         System.out.println("System Message: Proceeding to Payment Details...");
-        userHasInputBooking(); //check all fields are filled/selected
-    }
+        //userHasInputBooking(); //check all fields are filled/selected correctly
+        resetAllComponents();
+        setSize(350, 400);
 
-    //Radio Buttons (payment types)
+        // == reveal needed components ==
+        
+        //reciept button to progress
+        view.getRecieptButton().setVisible(true);
+        view.getRecieptButton().setLocation(190, 300);
+        
+        //return to booking page button
+        view.getBookingButton().setText("Back to Booking");
+        view.getBookingButton().setVisible(true);
+        view.getBookingButton().setLocation(20, 300);
+        //First name
+        view.getLabel7().setVisible(true);
+        view.getLabel7().setText("First Name:");
+        view.getLabel7().setLocation(20, 20);
+        view.getField4().setVisible(true);
+        view.getField4().setLocation(90, 20);
+        //last name
+        view.getLabel8().setVisible(true);
+        view.getLabel8().setText("Last Name:");
+        view.getLabel8().setLocation(20, 70);
+        view.getField5().setVisible(true);
+        view.getField5().setLocation(90, 70);
+        //email
+        view.getLabel9().setVisible(true);
+        view.getLabel9().setText("Email:");
+        view.getLabel9().setLocation(50, 120);
+        view.getField6().setVisible(true);
+        view.getField6().setLocation(90, 120);
+        //phone number
+        view.getLabel10().setVisible(true);
+        view.getLabel10().setText("Phone#");
+        view.getLabel10().setLocation(40, 170);
+        view.getField7().setVisible(true);
+        view.getField7().setLocation(90, 170);
+        
+        //bank account number
+        view.getLabel1().setVisible(true);
+        view.getLabel1().setText("Bank Account Number: (If doing Bank Transfer)");
+        view.getLabel1().setSize(300, 30);
+        view.getLabel1().setLocation(20, 200);
+
+        //layout as |field| - |field| - |field| for bank acc num
+        view.getField1().setVisible(true);
+        view.getField1().setSize(60, 30);
+        view.getField1().setLocation(30, 240);
+
+        view.getLabel2().setVisible(true);
+        view.getLabel2().setText("--");
+        view.getLabel2().setLocation(100, 240);
+
+        view.getField2().setVisible(true);
+        view.getField2().setSize(60, 30);
+        view.getField2().setLocation(120, 240);
+
+        view.getLabel3().setVisible(true);
+        view.getLabel3().setText("--");
+        view.getLabel3().setLocation(190, 240);
+
+        view.getField3().setVisible(true);
+        view.getField3().setSize(60, 30);
+        view.getField3().setLocation(210, 240);
+
+    }
+    
+    //recieptButton
+    private void eventHandlerRecieptButton(){
+        System.out.println("System Message: Proceeding to Reciept...");
+        resetAllComponents();
+        setSize(450, 400);
+        
+        //return to menu button
+        view.getBackButton().setVisible(true);
+        view.getBackButton().setText("Return to Menu");
+        view.getBackButton().setLocation(30, 300);
+        
+        //return to details button
+        view.getPayDetailsButton().setVisible(true);
+        view.getPayDetailsButton().setSize(200,30);
+        view.getPayDetailsButton().setText("Return to Payment Details");
+        view.getPayDetailsButton().setLocation(200,300);
+        
+        //reciept title
+        view.getLabel1().setVisible(true);
+        view.getLabel1().setText("## RECIEPT ##");
+        view.getLabel1().setLocation(180, 0);
+    }
+    //== Radio Buttons (payment types) ==
     //Cash
     private void eventHandlerRButton1() {
         System.out.println("System Message: \"Cash\" Button selected");
@@ -380,6 +477,7 @@ public class BookingController extends JFrame {
         view.getCheckReviewButton().setVisible(false);
         view.getWriteReviewButton().setVisible(false);
         view.getPayDetailsButton().setVisible(false);
+        view.getRecieptButton().setVisible(false);
 
         //Labels
         view.getLabel1().setVisible(false);
@@ -402,6 +500,9 @@ public class BookingController extends JFrame {
         view.getField2().setVisible(false);
         view.getField3().setVisible(false);
         view.getField4().setVisible(false);
+        view.getField5().setVisible(false);
+        view.getField6().setVisible(false);
+        view.getField7().setVisible(false);
 
         //JList
         view.getDayList().setVisible(false);
@@ -412,14 +513,38 @@ public class BookingController extends JFrame {
         view.getrButton3().setVisible(false);
     }
 
-    //show menu buttons 
+    //show menu components 
     public void showMenu() {
+        //welcome title
         view.getLabel1().setVisible(true);
+        view.getLabel1().setText("## Welcome to Dreamland Hotels! ##");
+        view.getLabel1().setLocation(35, 15);
+        view.getLabel1().setSize(250, 20);
+        //booking
         view.getBookingButton().setVisible(true);
+        view.getBookingButton().setText("Create Booking");
+        view.getBookingButton().setLocation(65, 50);
+        view.getBookingButton().setSize(150, 30);
+        //availability
         view.getAvailabilityButton().setVisible(true);
+        view.getAvailabilityButton().setText("View Availability");
+        view.getAvailabilityButton().setLocation(65, 90);
+        view.getAvailabilityButton().setSize(150, 30);
+        //currency
         view.getCurrencyButton().setVisible(true);
+        view.getCurrencyButton().setText("Currency Converter");
+        view.getCurrencyButton().setLocation(65, 130);
+        view.getCurrencyButton().setSize(150, 30);
+        //review
         view.getReviewButton().setVisible(true);
+        view.getReviewButton().setText("Reviews");
+        view.getReviewButton().setLocation(65, 170);
+        view.getReviewButton().setSize(150, 30);
+        //contacts
         view.getContactButton().setVisible(true);
+        view.getContactButton().setText("Contact Details");
+        view.getContactButton().setLocation(65, 210);
+        view.getContactButton().setSize(150, 30);
     }
 
     //check day input from user in Booking GUI
@@ -429,7 +554,7 @@ public class BookingController extends JFrame {
         try {
             Booking.weekDay = Booking.getWeekDay((String) view.getDayList().getSelectedValue());
             //check that both fields and day are selected/input for booking
-            if (fieldIsEmpty == true && Booking.weekDay == null) {
+            if (fieldIsEmpty == true || Booking.weekDay == null) {
                 throw new NullPointerException(); //generate null error
             }
         } catch (ClassCastException e) {
@@ -442,8 +567,8 @@ public class BookingController extends JFrame {
                 System.out.println("System Message: Error! Please select a day!");
                 view.getRbGroup().clearSelection(); //reset selection
             } else { //a field is empty
-                JOptionPane.showMessageDialog(null, "Error! Please select a day and\n fill in text fields!"); //display error message pane
-                System.out.println("System Message: Error! Please select a day and  fill in text fields!");
+                JOptionPane.showMessageDialog(null, "Error! Please select a day and\n fill in text fields with INTEGERS ONLY!"); //display error message pane
+                System.out.println("System Message: Error! Please select a day and  fill in text fields with INTEGERS ONLY!");
                 view.getRbGroup().clearSelection(); //reset selection
             }
             e.getMessage();
@@ -455,9 +580,16 @@ public class BookingController extends JFrame {
         if (view.getField1().getText().isEmpty() == false
                 && view.getField2().getText().isEmpty() == false
                 && view.getField3().getText().isEmpty() == false) {
-            return false; //all fields are filled
+            //check if the inputs are integers
+            if (model.tryNum(view.getField1().getText()) == true
+                    && model.tryNum(view.getField2().getText()) == true
+                    && model.tryNum(view.getField3().getText()) == true) {
+                return false; //all fields are filled AND are integers
+            } else {
+                return true; //fields are filled, BUT one/more are NOT integers
+            }
         } else {
-            return true; //one of the three fields are empty
+            return true; //one or more of the three fields are empty
         }
     }
 

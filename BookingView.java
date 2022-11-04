@@ -21,6 +21,13 @@ import javax.swing.ButtonGroup;
  */
 public class BookingView extends JPanel {
 
+    /**
+     * @return the recieptButton
+     */
+    public JButton getRecieptButton() {
+        return recieptButton;
+    }
+
     //========= Fields =========
     private Booking model;
 
@@ -34,6 +41,7 @@ public class BookingView extends JPanel {
     private JButton checkReviewButton;
     private JButton writeReviewButton;
     private JButton payDetailsButton;
+    private JButton recieptButton;
 
     //Labels
     private JLabel label1;
@@ -56,6 +64,9 @@ public class BookingView extends JPanel {
     private JTextField field2;
     private JTextField field3;
     private JTextField field4;
+    private JTextField field5;
+    private JTextField field6;
+    private JTextField field7;
 
     //JList
     private final String[] availableDays = {"Monday", "Thursday", "Sunday"};
@@ -79,33 +90,23 @@ public class BookingView extends JPanel {
         //## Create the components and then add to the panel ##
         //===== Buttons =====
         //bookingButton attributes
-        bookingButton = new JButton("Create Booking");
-        bookingButton.setLocation(65, 50);
-        bookingButton.setSize(150, 30);
+        bookingButton = new JButton();
         add(bookingButton);
 
         //availabilityButton attributes
-        availabilityButton = new JButton("View Availability");
-        availabilityButton.setLocation(65, 90);
-        availabilityButton.setSize(150, 30);
+        availabilityButton = new JButton();
         add(availabilityButton);
 
         //currencyButton attributes
-        currencyButton = new JButton("Currency Converter");
-        currencyButton.setLocation(65, 130);
-        currencyButton.setSize(150, 30);
+        currencyButton = new JButton();
         add(currencyButton);
 
         //reviewButton attributes
-        reviewButton = new JButton("Reviews");
-        reviewButton.setLocation(65, 170);
-        reviewButton.setSize(150, 30);
+        reviewButton = new JButton();
         add(reviewButton);
 
         //contactButton attributes
-        contactButton = new JButton("Contact Details");
-        contactButton.setLocation(65, 210);
-        contactButton.setSize(150, 30);
+        contactButton = new JButton();
         add(contactButton);
 
         //backButton Attributes
@@ -128,18 +129,22 @@ public class BookingView extends JPanel {
         writeReviewButton.setSize(150, 30);
         writeReviewButton.setVisible(false);
         add(writeReviewButton);
-        
+
         //payDetailsButton
         payDetailsButton = new JButton("Proceed to Payment");
         payDetailsButton.setSize(250, 30);
         payDetailsButton.setVisible(false);
         add(payDetailsButton);
         
+        //recieptButton
+        recieptButton = new JButton("Confirm");
+        recieptButton.setSize(125, 30);
+        recieptButton.setVisible(false);
+        add(recieptButton);
+
         //===== Labels =====
         //label1 attributes
         label1 = new JLabel("## Welcome to Dreamland Hotels! ##");
-        label1.setLocation(35, 15);
-        label1.setSize(250, 20);
         add(label1);
 
         //label2 attributes
@@ -230,11 +235,29 @@ public class BookingView extends JPanel {
 
         //field4 attributes
         field4 = new JTextField();
-        field4.setSize(100, 30);
+        field4.setSize(200, 30);
         field4.setLocation(600, 340);
         field4.setVisible(false);
         add(field4);
-
+        
+        //field5 attributes
+        field5 = new JTextField();
+        field5.setSize(200,30);
+        field5.setVisible(false);
+        add(field5);
+        
+        //field6 attributes
+        field6 = new JTextField();
+        field6.setSize(200,30);
+        field6.setVisible(false);
+        add(field6);
+        
+        //field7 attributes
+        field7 = new JTextField();
+        field7.setSize(200,30);
+        field7.setVisible(false);
+        add(field7);
+        
         //===== JList =====
         dayList = new JList<String>(availableDays);
         dayList.setLocation(100, 250);
@@ -244,19 +267,19 @@ public class BookingView extends JPanel {
 
         //===== RadioButton + ButtonGroup =====
         //rb1
-        rButton1 = new JRadioButton("Cash");
+        rButton1 = new JRadioButton();
         rButton1.setSize(30, 40);
         rButton1.setVisible(false);
         add(rButton1);
 
         //rb2
-        rButton2 = new JRadioButton("Card");
+        rButton2 = new JRadioButton();
         rButton2.setSize(30, 40);
         rButton2.setVisible(false);
         add(rButton2);
 
         //rb3
-        rButton3 = new JRadioButton("Bank Transfer");
+        rButton3 = new JRadioButton();
         rButton3.setSize(30, 40);
         rButton3.setVisible(false);
         add(rButton3);
@@ -515,4 +538,24 @@ public class BookingView extends JPanel {
         return payDetailsButton;
     }
 
+    /**
+     * @return the field5
+     */
+    public JTextField getField5() {
+        return field5;
+    }
+
+    /**
+     * @return the field6
+     */
+    public JTextField getField6() {
+        return field6;
+    }
+
+    /**
+     * @return the field7
+     */
+    public JTextField getField7() {
+        return field7;
+    }
 }
