@@ -79,7 +79,7 @@ public class CUIMain {
             case 1: { //Create a booking
                 try {
                     createBooking();
-                    makePayment();
+                    setPayChoice();
                 } catch (InputMismatchException e) {
                     System.out.println("Invalid input!");
                 }
@@ -162,13 +162,18 @@ public class CUIMain {
     }
 
     //==========================================================================
-    public static void makePayment() {
-        System.out.println("==========================");
-        System.out.println("How would you like to pay?");
-        System.out.println("Cash, Card, or Bank Transfer? (type bt for Bank Transfer)");
-        //scan.nextLine(); //flush buffer as changing from int to String input
-        payChoice = (String) bkView.getDayList().getSelectedValue(); //get from GUI
-        Payment p = new Payment(payChoice); //initialise payment type value
+    public static void setPayChoice() {
+        System.out.println("System Message: makePayment() executing...");
+        
+        if (bkView.getRbGroup().getSelection().equals(bkView.getrButton1())) { //cash
+            payChoice = "Cash";
+        } else if (bkView.getRbGroup().getSelection().equals(bkView.getrButton2())) { //card
+            payChoice = "Card";
+        } else if (bkView.getRbGroup().getSelection().equals(bkView.getrButton3())) { //bank transfer
+            payChoice = "bt";
+        }
+        System.out.println("Payment Option: " + payChoice);
+        Payment p = new Payment(payChoice); //initialise and set payment type value
     }
 
     //==========================================================================

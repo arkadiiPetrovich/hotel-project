@@ -9,6 +9,8 @@ import static Assignment2.Payment.hotelEmail;
 import static Assignment2.Payment.hotelPhone;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import javax.swing.JFrame;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import javax.swing.JOptionPane;
@@ -93,25 +95,33 @@ public class BookingController extends JFrame {
             }
         });
 
-        //Checkboxes
-        //rButton1 (Cash)
-        view.getrButton1().addActionListener(new ActionListener() {
+        //payDetailsButton
+        view.getPayDetailsButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                eventHandlerPayDetailsButton();
+            }
+        });
+
+        //## RadioButtons ##
+        //rButton1 (Cash)
+        view.getrButton1().addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
                 eventHandlerRButton1();
             }
         });
         //rButton2 (Card)
-        view.getrButton2().addActionListener(new ActionListener() {
+        view.getrButton2().addItemListener(new ItemListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void itemStateChanged(ItemEvent e) {
                 eventHandlerRButton2();
             }
         });
         //rButton3 (Bank Transfer/bt)
-        view.getrButton3().addActionListener(new ActionListener() {
+        view.getrButton3().addItemListener(new ItemListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void itemStateChanged(ItemEvent e) {
                 eventHandlerRButton3();
             }
         });
@@ -121,6 +131,22 @@ public class BookingController extends JFrame {
     //bookingButton
     private void eventHandlerBookingButton() {
         System.out.println("System Message: Proceeding to Booking. . .");
+        //Booking frame selection to be cleared 
+        try {
+            /*
+            * Error pane will pop up if either the radio buttons or list are 
+            * Null, so both need to be cleared at the same time
+            */
+            if (view.getRbGroup().getSelection().isSelected()) { //if radio buttons are pressed prior
+                view.getRbGroup().clearSelection(); //clear selection
+                view.getDayList().clearSelection(); //clear list selection
+            }
+        } catch (NullPointerException e) {
+            System.out.println("System Message: NullPointerExeption caught");
+            System.out.println("Proceeding...");
+            e.getMessage();
+        }
+
         //this.model = new Booking(1); //initialise and run methods to proceed with booking
         resetAllComponents(); //hide everything to begin reshaping frame
         setSize(900, 500); //redefine frame size
@@ -128,6 +154,9 @@ public class BookingController extends JFrame {
         //reveal needed components
         view.getBackButton().setVisible(true);
         view.getBackButton().setLocation(30, 400);
+
+        view.getPayDetailsButton().setVisible(true);
+        view.getPayDetailsButton().setLocation(525, 400);
 
         //Payment Type selection
         view.getLabel10().setVisible(true);
@@ -144,7 +173,6 @@ public class BookingController extends JFrame {
         view.getrButton3().setLocation(800, 335);
 
         dayAndUnitFrame();
-        CUIMain.makePayment(); //initialise values for payment type
     }
 
     //availabilityButton
@@ -239,7 +267,13 @@ public class BookingController extends JFrame {
         System.out.println("System Message: Proceeding to \"Write a Review\"...");
     }
 
-    //Checkboxes (payment types)
+    //payDetailsButton
+    private void eventHandlerPayDetailsButton() {
+        System.out.println("System Message: Proceeding to Payment Details...");
+
+    }
+
+    //Radio Buttons (payment types)
     //Cash
     private void eventHandlerRButton1() {
         setUserDay();
@@ -316,11 +350,7 @@ public class BookingController extends JFrame {
     * proceed with enabling only the necessary components
      */
     public void resetAllComponents() {
-        
-        //Booking frame selection to be cleared
-        view.getDayList().clearSelection();
-        view.getRbGroup().clearSelection();
-        
+
         //Buttons
         view.getBookingButton().setVisible(false);
         view.getAvailabilityButton().setVisible(false);
@@ -330,6 +360,7 @@ public class BookingController extends JFrame {
         view.getBackButton().setVisible(false);
         view.getCheckReviewButton().setVisible(false);
         view.getWriteReviewButton().setVisible(false);
+        view.getPayDetailsButton().setVisible(false);
 
         //Labels
         view.getLabel1().setVisible(false);
@@ -378,9 +409,12 @@ public class BookingController extends JFrame {
         try {
             Booking.weekDay = Booking.getWeekDay((String) view.getDayList().getSelectedValue());
         } catch (ClassCastException e) {
+            System.out.println("System Message: ClassCastException caught");
+            System.out.println("Coninuing. . .");
             e.getMessage();
         } catch (NullPointerException e) {
-            JOptionPane.showMessageDialog(null, "Error! Please select a day!");
+            JOptionPane.showMessageDialog(null, "Error! Please select a day!"); //display error message pane
+            System.out.println("System Message: Error! Please select a day!");
             e.getMessage();
 
         }

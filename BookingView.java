@@ -33,6 +33,7 @@ public class BookingView extends JPanel {
     private JButton menuButton;
     private JButton checkReviewButton;
     private JButton writeReviewButton;
+    private JButton payDetailsButton;
 
     //Labels
     private JLabel label1;
@@ -127,7 +128,13 @@ public class BookingView extends JPanel {
         writeReviewButton.setSize(150, 30);
         writeReviewButton.setVisible(false);
         add(writeReviewButton);
-
+        
+        //payDetailsButton
+        payDetailsButton = new JButton("Proceed to Payment");
+        payDetailsButton.setSize(250, 30);
+        payDetailsButton.setVisible(false);
+        add(payDetailsButton);
+        
         //===== Labels =====
         //label1 attributes
         label1 = new JLabel("## Welcome to Dreamland Hotels! ##");
@@ -253,16 +260,18 @@ public class BookingView extends JPanel {
         rButton3.setSize(40, 40);
         rButton3.setVisible(false);
         add(rButton3);
-        
+
+        /*
+        * Button group makes sure only one button
+        * at a time may be selected
+         */
         rbGroup = new ButtonGroup();
         rbGroup.add(rButton1);
         rbGroup.add(rButton2);
         rbGroup.add(rButton3);
-        
+
         //===== Option Pane =====
-        errorPane = new JOptionPane( "Error");
-        //errorPane.setBounds(20, 50, 250, 100);
-        errorPane.setVisible(false);
+        errorPane = new JOptionPane("Error");
         add(errorPane);
 
     } //## END OF CONSTRUCTOR ##
@@ -498,4 +507,12 @@ public class BookingView extends JPanel {
     public ButtonGroup getRbGroup() {
         return rbGroup;
     }
+
+    /**
+     * @return the payDetailsButton
+     */
+    public JButton getPayDetailsButton() {
+        return payDetailsButton;
+    }
+
 }

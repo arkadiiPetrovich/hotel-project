@@ -5,7 +5,6 @@ package Assignment2;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
     import static Assignment2.CUIMain.createBooking;
-import static Assignment2.CUIMain.makePayment;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -18,6 +17,7 @@ import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.StringTokenizer;
+import static Assignment2.CUIMain.setPayChoice;
 
 /**
  *
@@ -63,7 +63,7 @@ public class Booking {
     public void startBooking() {
         try {
             createBooking(); //booking
-            makePayment(); //transaction
+            setPayChoice(); //transaction
         } catch (InputMismatchException e) {
             e.getMessage();
             System.out.println("Invalid input!");
