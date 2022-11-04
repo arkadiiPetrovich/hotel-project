@@ -282,11 +282,10 @@ public class BookingController extends JFrame {
         setSize(350, 400);
 
         // == reveal needed components ==
-        
         //reciept button to progress
         view.getRecieptButton().setVisible(true);
         view.getRecieptButton().setLocation(190, 300);
-        
+
         //return to booking page button
         view.getBookingButton().setText("Back to Booking");
         view.getBookingButton().setVisible(true);
@@ -315,7 +314,7 @@ public class BookingController extends JFrame {
         view.getLabel10().setLocation(40, 170);
         view.getField7().setVisible(true);
         view.getField7().setLocation(90, 170);
-        
+
         //bank account number
         view.getLabel1().setVisible(true);
         view.getLabel1().setText("Bank Account Number: (If doing Bank Transfer)");
@@ -344,29 +343,45 @@ public class BookingController extends JFrame {
         view.getField3().setLocation(210, 240);
 
     }
-    
+
     //recieptButton
-    private void eventHandlerRecieptButton(){
+    private void eventHandlerRecieptButton() {
         System.out.println("System Message: Proceeding to Reciept...");
         resetAllComponents();
-        setSize(450, 400);
-        
+        setSize(465, 550);
+
         //return to menu button
         view.getBackButton().setVisible(true);
         view.getBackButton().setText("Return to Menu");
-        view.getBackButton().setLocation(30, 300);
-        
+        view.getBackButton().setLocation(30, 450);
+
         //return to details button
         view.getPayDetailsButton().setVisible(true);
-        view.getPayDetailsButton().setSize(200,30);
+        view.getPayDetailsButton().setSize(200, 30);
         view.getPayDetailsButton().setText("Return to Payment Details");
-        view.getPayDetailsButton().setLocation(200,300);
-        
+        view.getPayDetailsButton().setLocation(200, 450);
+
         //reciept title
         view.getLabel1().setVisible(true);
         view.getLabel1().setText("## RECIEPT ##");
         view.getLabel1().setLocation(180, 0);
+
+        //textbox
+        view.getTextArea1().setVisible(true);
+        view.getTextArea1().setLocation(20, 30);
+        view.getTextArea1().setSize(400, 400);
+        Payment p = new Payment();
+        //from previous GUI entry
+        Payment.fname = view.getField4().getText();
+        Payment.lname = view.getField5().getText();
+        Payment.email = view.getField6().getText();
+        Payment.phoneNum = view.getField7().getText();
+        Payment.accountNum = view.getField1().getText() + "-"
+                + view.getField2().getText() + "-"
+                + view.getField3().getText();
+        view.getTextArea1().setText(p.reciept(menuOptions.payChoice, Payment.email));
     }
+
     //== Radio Buttons (payment types) ==
     //Cash
     private void eventHandlerRButton1() {

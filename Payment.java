@@ -1,6 +1,5 @@
 package Assignment2;
 
-
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Random;
@@ -59,6 +58,9 @@ public class Payment implements Transaction {
         setPaymentType(userPaymentChoice);
 
     }
+    public Payment(){
+        //default
+    }
 
     //================ ### METHODS ### ================
     @Override
@@ -109,7 +111,7 @@ public class Payment implements Transaction {
                 Card card;
                 card = new Card(fname, lname, accountNum, bank, expMonth, expYear);
                 book.updateAvailability(menuOptions.dayChoice); //update txt file
-                
+
                 //Transaction summary
                 reciept("Card", email);
                 card.getCardDetails(); //display card details
@@ -194,7 +196,7 @@ public class Payment implements Transaction {
                 //Create Bank Transfer object
                 BankTransfer bt = new BankTransfer(fname, lname, accountNum, bank);
                 book.updateAvailability(menuOptions.dayChoice); //update txt file
-                
+
                 //Transaction summary
                 reciept("Bank Transfer", email);
                 bt.getTransferDetails();
@@ -212,29 +214,28 @@ public class Payment implements Transaction {
     /*
     * Summary of the GENERAL transaction details
      */
-    @Override
-    public void reciept(String paymentType, String email) {
-        System.out.println("\n### R E C E I P T ###");
-        System.out.println("DATE: " + book.currentDate);
-        System.out.println("-- CUSTOMER DETAILS --");
-        System.out.println("Name: " + fname + " " + lname);
-        System.out.println("Email: " + email);
-        System.out.println("Phone No# " + phoneNum);
-        System.out.println("Transport required? " + needTransport);
+    public String reciept(String paymentType, String email) {
+        String out = "";
+        out += "\n### R E C E I P T ###";
+        out += "\nDATE: " + book.currentDate;
+        out += "\n-- CUSTOMER DETAILS --";
+        out += "\nName: " + fname + " " + lname;
+        out += "\nEmail: " + email;
+        out += "\nPhone No# " + phoneNum;
 
         //------------------------------------------
         //need reference for what was booked
-        System.out.println("# BOOKING DETAILS #");
-        System.out.println(u.returnSelectedUnit(menuOptions.unitChoice));
-        //need reference for unit prices with Dmitry
-        System.out.println("TOTAL: $" + String.format("%.2f", total) + " NZD");
+        out += "\n# BOOKING DETAILS #";
+        out += "\n" + u.returnSelectedUnit(menuOptions.unitChoice);
+
+        out += "\nTOTAL: $" + String.format("%.2f", total) + " NZD";
         //------------------------------------------
-        System.out.println("# CONFIRMATION ID #");
-        System.out.println(confirmationID);
-        System.out.println("PAYMENT TYPE: " + paymentType);
-        System.out.println("Bank: " + bank);
-        System.out.println("Account no. " + accountNum);
-        System.out.println("Hotel Bank no. " + BankTransfer.getHotelBankNum());
+        out += "\n# CONFIRMATION ID #";
+        out += "\n"+confirmationID;
+        out+="\nPAYMENT TYPE: " + paymentType;
+        out+="\nAccount no. " + accountNum;
+        out+="\nHotel Bank no. " + BankTransfer.getHotelBankNum();
+        return out;
     }
 
     //================================================

@@ -17,5 +17,4 @@ interface Transaction{
     public void setPaymentType(String choice);
     public String getPaymentType();
     public void pay();
-    public void reciept(String paymentType, String email);
 }
