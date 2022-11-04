@@ -136,13 +136,14 @@ public class BookingController extends JFrame {
             /*
             * Error pane will pop up if either the radio buttons or list are 
             * Null, so both need to be cleared at the same time
-            */
+             */
             if (view.getRbGroup().getSelection().isSelected()) { //if radio buttons are pressed prior
                 view.getRbGroup().clearSelection(); //clear selection
                 view.getDayList().clearSelection(); //clear list selection
             }
         } catch (NullPointerException e) {
             System.out.println("System Message: NullPointerExeption caught");
+            System.out.println("RadioButton selection cleared");
             System.out.println("Proceeding...");
             e.getMessage();
         }
@@ -151,28 +152,24 @@ public class BookingController extends JFrame {
         resetAllComponents(); //hide everything to begin reshaping frame
         setSize(900, 500); //redefine frame size
 
-        //reveal needed components
+        //== reveal needed components ==
         view.getBackButton().setVisible(true);
         view.getBackButton().setLocation(30, 400);
 
         view.getPayDetailsButton().setVisible(true);
         view.getPayDetailsButton().setLocation(525, 400);
 
-        //Payment Type selection
-        view.getLabel10().setVisible(true);
-        view.getLabel10().setLocation(600, 250);
-
         //show the radio buttons
         view.getrButton1().setVisible(true);
-        view.getrButton1().setLocation(800, 235);
+        view.getrButton1().setLocation(555, 235);
 
         view.getrButton2().setVisible(true);
-        view.getrButton2().setLocation(800, 285);
+        view.getrButton2().setLocation(555, 285);
 
         view.getrButton3().setVisible(true);
-        view.getrButton3().setLocation(800, 335);
+        view.getrButton3().setLocation(555, 335);
 
-        dayAndUnitFrame();
+        dayAndUnitFrame(); //the rest of the GUI components for booking option
     }
 
     //availabilityButton
@@ -270,23 +267,29 @@ public class BookingController extends JFrame {
     //payDetailsButton
     private void eventHandlerPayDetailsButton() {
         System.out.println("System Message: Proceeding to Payment Details...");
-
+        userHasInputBooking(); //check all fields are filled/selected
     }
 
     //Radio Buttons (payment types)
     //Cash
     private void eventHandlerRButton1() {
-        setUserDay();
+        System.out.println("System Message: \"Cash\" Button selected");
+        menuOptions.payChoice = "Cash";
+        menuOptions.setPayChoice(); //set pay choice
     }
 
     //Card
     private void eventHandlerRButton2() {
-        setUserDay();
+        System.out.println("System Message: \"Card\" Button selected");
+        menuOptions.payChoice = "Card";
+        menuOptions.setPayChoice(); //set pay choice
     }
 
     //BankTranser/bt
     private void eventHandlerRButton3() {
-        setUserDay();
+        System.out.println("System Message: \"Bank Transfer\" Button selected");
+        menuOptions.payChoice = "Bank Transfer";
+        menuOptions.setPayChoice(); //set pay choice
     }
     //========= Methods =========
 
@@ -308,11 +311,11 @@ public class BookingController extends JFrame {
 
         // # right side #
         view.getLabel4().setVisible(true);
-        view.getLabel4().setLocation(580, 0);
+        view.getLabel4().setLocation(600, 0);
         view.getLabel4().setText("## Room/Unit Types ##");
         view.getTextArea2().setVisible(true);
         view.getTextArea2().setSize(400, 175);
-        view.getTextArea2().setLocation(450, 30);
+        view.getTextArea2().setLocation(460, 30);
         view.getTextArea2().setEditable(false);
 
         //Unit, # of people selection
@@ -343,6 +346,22 @@ public class BookingController extends JFrame {
         String unitReviews = u.showAllUnits();
         view.getTextArea2().setText(unitReviews);
 
+        //Payment Type selection
+        view.getLabel10().setVisible(true);
+        view.getLabel10().setLocation(600, 215);
+        view.getLabel10().setText("Select Payment Type:");
+
+        view.getLabel1().setVisible(true);
+        view.getLabel1().setLocation(590, 245);
+        view.getLabel1().setText(" = = = = = Cash = = = = = =");
+
+        view.getLabel3().setVisible(true);
+        view.getLabel3().setLocation(590, 295);
+        view.getLabel3().setText(" = = = = = Card = = = = = =");
+
+        view.getLabel5().setVisible(true);
+        view.getLabel5().setLocation(590, 345);
+        view.getLabel5().setText("= = = Bank Transfer = = =");
     }
 
     /*
@@ -404,19 +423,41 @@ public class BookingController extends JFrame {
     }
 
     //check day input from user in Booking GUI
-    public void setUserDay() {
-
+    public void userHasInputBooking() throws NullPointerException {
+        boolean fieldIsEmpty;
+        fieldIsEmpty = checkTextFieldBooking();
         try {
             Booking.weekDay = Booking.getWeekDay((String) view.getDayList().getSelectedValue());
+            //check that both fields and day are selected/input for booking
+            if (fieldIsEmpty == true && Booking.weekDay == null) {
+                throw new NullPointerException(); //generate null error
+            }
         } catch (ClassCastException e) {
             System.out.println("System Message: ClassCastException caught");
             System.out.println("Coninuing. . .");
             e.getMessage();
         } catch (NullPointerException e) {
-            JOptionPane.showMessageDialog(null, "Error! Please select a day!"); //display error message pane
-            System.out.println("System Message: Error! Please select a day!");
+            if (fieldIsEmpty == false) { //text fields are NOT empty, but day selection IS empty
+                JOptionPane.showMessageDialog(null, "Error! Please select a day!"); //display error message pane
+                System.out.println("System Message: Error! Please select a day!");
+                view.getRbGroup().clearSelection(); //reset selection
+            } else { //a field is empty
+                JOptionPane.showMessageDialog(null, "Error! Please select a day and\n fill in text fields!"); //display error message pane
+                System.out.println("System Message: Error! Please select a day and  fill in text fields!");
+                view.getRbGroup().clearSelection(); //reset selection
+            }
             e.getMessage();
+        }
+    }
 
+    public boolean checkTextFieldBooking() {
+        //All three textfields MUST be given input in GUI
+        if (view.getField1().getText().isEmpty() == false
+                && view.getField2().getText().isEmpty() == false
+                && view.getField3().getText().isEmpty() == false) {
+            return false; //all fields are filled
+        } else {
+            return true; //one of the three fields are empty
         }
     }
 

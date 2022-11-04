@@ -243,21 +243,21 @@ public class BookingView extends JPanel {
         add(dayList);
 
         //===== RadioButton + ButtonGroup =====
-        //box1
-        rButton1 = new JRadioButton();
-        rButton1.setSize(40, 40);
+        //rb1
+        rButton1 = new JRadioButton("Cash");
+        rButton1.setSize(30, 40);
         rButton1.setVisible(false);
         add(rButton1);
 
-        //box2
-        rButton2 = new JRadioButton();
-        rButton2.setSize(40, 40);
+        //rb2
+        rButton2 = new JRadioButton("Card");
+        rButton2.setSize(30, 40);
         rButton2.setVisible(false);
         add(rButton2);
 
-        //box3
-        rButton3 = new JRadioButton();
-        rButton3.setSize(40, 40);
+        //rb3
+        rButton3 = new JRadioButton("Bank Transfer");
+        rButton3.setSize(30, 40);
         rButton3.setVisible(false);
         add(rButton3);
 

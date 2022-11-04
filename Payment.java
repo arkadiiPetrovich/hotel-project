@@ -108,7 +108,7 @@ public class Payment implements Transaction {
                 //Once all details have been recieved, create the "Card" object
                 Card card;
                 card = new Card(fname, lname, accountNum, bank, expMonth, expYear);
-                book.updateAvailability(CUIMain.dayChoice); //update txt file
+                book.updateAvailability(menuOptions.dayChoice); //update txt file
                 
                 //Transaction summary
                 reciept("Card", email);
@@ -142,7 +142,7 @@ public class Payment implements Transaction {
                 }
                 //Create the cash object
                 Cash cash = new Cash(fname, lname, cashToPay);
-                book.updateAvailability(CUIMain.dayChoice); //update txt file
+                book.updateAvailability(menuOptions.dayChoice); //update txt file
 
                 //Transaction summary
                 reciept("Cash", email); //display the general summary of the transaction
@@ -168,7 +168,7 @@ public class Payment implements Transaction {
                 }
                 //Create Bank Transfer object
                 BankTransfer bt = new BankTransfer(fname, lname, accountNum, bank);
-                book.updateAvailability(CUIMain.dayChoice); //update txt file
+                book.updateAvailability(menuOptions.dayChoice); //update txt file
 
                 //Transaction summary
                 reciept("Bank Transfer", email);
@@ -193,7 +193,7 @@ public class Payment implements Transaction {
                 }
                 //Create Bank Transfer object
                 BankTransfer bt = new BankTransfer(fname, lname, accountNum, bank);
-                book.updateAvailability(CUIMain.dayChoice); //update txt file
+                book.updateAvailability(menuOptions.dayChoice); //update txt file
                 
                 //Transaction summary
                 reciept("Bank Transfer", email);
@@ -225,7 +225,7 @@ public class Payment implements Transaction {
         //------------------------------------------
         //need reference for what was booked
         System.out.println("# BOOKING DETAILS #");
-        System.out.println(u.returnSelectedUnit(CUIMain.unitChoice));
+        System.out.println(u.returnSelectedUnit(menuOptions.unitChoice));
         //need reference for unit prices with Dmitry
         System.out.println("TOTAL: $" + String.format("%.2f", total) + " NZD");
         //------------------------------------------

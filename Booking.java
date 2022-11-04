@@ -4,7 +4,7 @@ package Assignment2;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-    import static Assignment2.CUIMain.createBooking;
+    import static Assignment2.menuOptions.createBooking;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -17,7 +17,7 @@ import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.StringTokenizer;
-import static Assignment2.CUIMain.setPayChoice;
+import static Assignment2.menuOptions.setPayChoice;
 
 /**
  *
